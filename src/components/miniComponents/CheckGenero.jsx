@@ -15,7 +15,7 @@ export const CheckGenero = ({genero,guardar,borrar}) => {
   return (
     <div className='flex flex-row text-white'>
     <input type="checkbox" className='mr-[10px]' ref={ref} name={genero} id={genero} onClick={saveChecked} />
-    <label htmlFor={genero}><p>{genero}</p></label>
+    <label htmlFor={genero}><h1>{genero}</h1></label>
     </div>
   )
 }
