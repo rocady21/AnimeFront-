@@ -6,6 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { GenerosDropdown } from "../miniComponents/Generos";
 import { useEffect } from "react";
 import { AnimeCapInserts } from "./AnimeCapInserts";
+import { fileupload } from "../../helpers/uploadFile";
+
 
 const animeForm = {
   name: "",
@@ -39,9 +41,12 @@ export const CrearAnime = () => {
 
   const { newAnime } = useAnimeSlice();
 
-  const CrearAnime = (e) => {
+  const CrearAnime = async(e) => {
     e.preventDefault();
-    newAnime({});
+    if(portadaCap) {
+      const imgurlPortada = await fileupload(Portada)
+      newAnime({name:name,Portada:imgurlPortada,fechaEmision:fechaEmision,FechaFinalizacion:FechaFinalizacion,Capitulos:capitulos,Generos:Generos,sinopsis});
+    }
   };
 
   // para cargar imagenes de portada Anime
@@ -74,10 +79,13 @@ export const CrearAnime = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFileCap]);
 
-  const loadCap = ()=> {
-    setcapitulos([...capitulos,{...inputValue,portadaCap:previewImageCap}])
-    onResetForm()
-    setPreviewImageCap(undefined)
+  const loadCap = async()=> {
+    if(portadaCap) {
+      const imgurl = await fileupload(portadaCap)
+      setcapitulos([...capitulos,{...inputValue,portadaCap:imgurl}])
+      onResetForm()
+      setPreviewImageCap(undefined)
+    } 
   }
 
   
@@ -92,7 +100,7 @@ export const CrearAnime = () => {
             <div>
               <img
                 src={previewImage || undefined}
-                className=" h-[300px] w-[650px] object-cover object-center border border-white"
+                className=" h-[300px] w-[200px] object-cover object-center border border-white"
               />
             </div>
             <label className="cursor-pointer mt-6">
@@ -135,7 +143,8 @@ export const CrearAnime = () => {
               cols="50"
               className="bg-transparent text-white border-b-[1px] border-amber-600 h-[100px] max-h-[100px]  outline-none"
               placeholder="Una descripcion breve del anime..."
-            ></textarea>
+              onChange={(e)=> setKey({key:"sinopsis",value:e.target.value})}
+              ></textarea>
           </div>
           <div className="fechas flex flex-row ">
             <div className="fechaInicio">
@@ -239,7 +248,8 @@ export const CrearAnime = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-full  p-[100px] text-white flex flex-col items-center box-border  ">
+        <div className="w-full h-full max-h-[90vh]  p-[50px] text-white flex flex-col items-center box-border  ">
+          <div className="w-full h-full flex flex-col items-center overflow-y-scroll mb-10">
           <p>Capitulos</p>
           {
             (capitulos[0])?
@@ -248,6 +258,8 @@ export const CrearAnime = () => {
             }):
             <div className="text-white text-[20px] p-[20px]">No hay Capitulo agregado</div>
           } 
+          </div>
+          <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2 " onClick={CrearAnime}>Crear Anime</button>
 
         </div>
       </form>

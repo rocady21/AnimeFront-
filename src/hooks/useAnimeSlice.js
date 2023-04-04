@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { onLoadAnimes } from "../store/Slices/animeSlice/animeSlice"
+import { createNewAnime, onLoadAnimes } from "../store/Slices/animeSlice/animeSlice"
 import { onLogin } from "../store/Slices/userSlice/userSlice"
 
 
@@ -9,8 +9,14 @@ export const useAnimeSlice = () => {
     const dispach = useDispatch()
     const {animes,isLoading} = useSelector((state) => state.anime)
     
-    const newAnime = ({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
+    const newAnime = async({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
 
+        try {
+            //peticion post a la base de datos
+            const resp = await animeApi.post("/anime/new",{name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})
+        } catch (error) {
+            console.log(error)
+        }
     }
     const LoadAnimes = async()=> {
         // mandar a disparar onChecking

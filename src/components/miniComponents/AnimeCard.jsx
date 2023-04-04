@@ -3,6 +3,8 @@ import { AnimeInfo } from './AnimeInfo';
 
 export const AnimeCard = ({anime}) => {
 
+    const {Portada} = anime
+
     const [info, setinfo] = useState(false);
 
     const MostrarInfo = ()=> {
@@ -21,7 +23,7 @@ export const AnimeCard = ({anime}) => {
 
         }
         <div className="fondo h-[90%] bg-black">
-            
+            <img className=' h-full object-cover object-center' src={Portada} alt="" />
         </div>
 
         <div className="nombre text-white text-center ">{anime.name}</div>

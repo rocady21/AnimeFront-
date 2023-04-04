@@ -12,11 +12,13 @@ export const animeSlice = createSlice({
     onLoadAnimes: (state,{payload})=> {
       state.animes = payload
       state.isLoading= true
-    }
-    
+    },
+    createNewAnime:(state,{payload})=> {
+      state.animes = [...state.animes,payload]
+    }    
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {onLoadAnimes} = animeSlice.actions
+export const {onLoadAnimes,createNewAnime} = animeSlice.actions
 
