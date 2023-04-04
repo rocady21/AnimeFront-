@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background: rgba(14, 14, 14, 0.945);
+}
+.contentRegister {
+    display: flex;
+    flex-direction: column;
+}
+
