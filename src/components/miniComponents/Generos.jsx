@@ -35,7 +35,7 @@ export const GenerosDropdown = ({setKey}) => {
 
 
   return (
-    <div className='grid grid-cols-3  h-[300px] flex flex-col flex-wrap '>
+    <div className='grid grid-cols-3 flex flex-col  '>
       {
       generos.map((genero) => {
         return <CheckGenero genero={genero} key={genero} guardar = {(genero)=> guardarValoresSeleccionados(genero)} borrar = {(genero) => borrarValoresSeleccionados(genero) }  />

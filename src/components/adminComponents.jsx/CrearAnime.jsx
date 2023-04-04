@@ -28,7 +28,6 @@ export const CrearAnime = () => {
     Capitulo,
     portadaCap,
     Duracion,
-    oninputChange: onInputChangeCapitulo,
     setKey: setKeyCap,
     onResetForm
   } = useForm({
@@ -76,19 +75,19 @@ export const CrearAnime = () => {
   }, [selectedFileCap]);
 
   const loadCap = ()=> {
-    setcapitulos([...capitulos,inputValue])
+    setcapitulos([...capitulos,{...inputValue,portadaCap:previewImageCap}])
     onResetForm()
     setPreviewImageCap(undefined)
   }
 
   
   return (
-    <div className="w-full h-full ">
+    <div className="h-full w-full box-content">
       <form
-        className=" w-full h-full  grid grid-cols-3 box-content  "
+        className=" w-full h-full  grid grid-cols-3 box-border p-4  "
         onSubmit={CrearAnime}
       >
-        <div className="h-full flex flex-col justify-between ">
+        <div className="h-full flex flex-col justify-between box-border ">
           <div className=" flex flex-col items-center  ">
             <div>
               <img
@@ -106,6 +105,7 @@ export const CrearAnime = () => {
                 }}
                 type="file"
                 className="hidden"
+                
               />
             </label>
           </div>
@@ -161,16 +161,16 @@ export const CrearAnime = () => {
           </div>
         </div>
         <div className="h-full  flex flex-col justify-around items-center">
-          <div className="generos w-[550px] h-[50%]">
+          <div className="generos w-[550px] overflow-hidden  ">
             <h1 className="text-white text-center">Generos</h1>
             <GenerosDropdown setKey={setKey} />
           </div>
-          <div className="h-[50%] w-[50%] flex flex-col justify-center mt-[50px] ">
+          <div className=" w-[50%] flex flex-col justify-center mt-[50px] box-border ">
             <h1 className="text-white text-[20px] text-center">
               Agregar Capitulos
             </h1>
-            <div action="" className="text-white">
-              <div className="flex flex-col  justify-around">
+            <div className="text-white box-content box-border">
+              <div className="flex flex-col  justify-around box-border">
                 <input
                   autoComplete="off-autocomplete"
                   type="text"
@@ -181,8 +181,8 @@ export const CrearAnime = () => {
                   onChange={(e)=> setKeyCap({key:"nameCapitulo",value:e.target.value})}
                   className="bg-transparent text-white border-b-[1px] border-amber-600 h-[40px] px-[10px] w-full outline-none"
                 />
-                <div className="numeros ">
-                  <div className="cap flex justify-around items-center mb-[20px] mt-[20px] ">
+                <div className="numeros box-border">
+                  <div className="cap flex justify-between items-center mb-[20px] mt-[20px] box-border ">
                     <label htmlor="Capitulo">Numero</label>
                     <input
                       type="number"
@@ -195,7 +195,7 @@ export const CrearAnime = () => {
                     />
                   </div>
 
-                  <div className="duracion flex justify-around items-center">
+                  <div className="duracion flex justify-between items-center box-border">
                     <label htmlor="Duracion">Duracion mns</label>
                     <input
                       type="number"
@@ -209,10 +209,10 @@ export const CrearAnime = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row mt-[20px] h-full justify-around">
-                <div className="portadaCap w-full  text-center flex flex-col">
+              <div className="flex flex-row mt-[20px] h-full justify-around box-border ">
+                <div className="portadaCap w-full  text-center flex flex-col box-content">
                   <h1>Portada Capitulo</h1>
-                  <div className="mb-[20px]">
+                  <div className="mb-[20px] ">
                     <img
                       src={previewImageCap || undefined}
                       className="w-full h-[150px] mt-[20px]"
@@ -239,7 +239,7 @@ export const CrearAnime = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-full bg-zinc-900 p-[100px] text-white flex flex-col items-center  ">
+        <div className="w-full h-full  p-[100px] text-white flex flex-col items-center box-border  ">
           <p>Capitulos</p>
           {
             (capitulos[0])?

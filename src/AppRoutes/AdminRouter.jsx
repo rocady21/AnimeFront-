@@ -8,7 +8,7 @@ import { AnimePage } from '../components/AnimePage'
 
 export const AdminRouter = () => {
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full box-content'>
     <NavBarAdmin/>
     <Routes>
         <Route path='/*' element = {<AdminPage/>}/>

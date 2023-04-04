@@ -7,7 +7,7 @@ export const NavBarAdmin = () => {
 
   const {startLogout} = useUserSlice()
   return (
-    <div className='w-full h-[80px] bg-black flex items-center justify-between text-white'>
+    <div className='w-full h-[80px] bg-black flex items-center justify-between text-white box-border'>
         <div className='flex flex-row w-[50%] justify-around text-[20px]'>
             <h1 className='text-[25px]'>AnimeCOU</h1>
             <NavLink to={"/crearAnime"}><p>Crear Anime</p></NavLink>
