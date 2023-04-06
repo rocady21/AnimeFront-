@@ -21,7 +21,7 @@ export const CrearAnime = () => {
   const [fechaEmision, setfechaEmision] = useState(new Date());
   const [FechaFinalizacion, setFechaFinalizacion] = useState(new Date());
   const [capitulos, setcapitulos] = useState([]);
-  const { name, Portada, Generos, sinopsis, oninputChange, setKey } =
+  const { name, Portada, Generos, sinopsis, oninputChange, setKey,onResetForm } =
     useForm(animeForm);
 
   const {
@@ -31,7 +31,7 @@ export const CrearAnime = () => {
     portadaCap,
     Duracion,
     setKey: setKeyCap,
-    onResetForm
+    onResetForm:onResetFormCap
   } = useForm({
     nameCapitulo: "",
     Capitulo: null,
@@ -46,6 +46,10 @@ export const CrearAnime = () => {
     if(portadaCap) {
       const imgurlPortada = await fileupload(Portada)
       newAnime({name:name,Portada:imgurlPortada,fechaEmision:fechaEmision,FechaFinalizacion:FechaFinalizacion,Capitulos:capitulos,Generos:Generos,sinopsis});
+      onResetForm()
+      setPreviewImageCap(undefined)
+      setPreviewImage(undefined)
+      setKey({key:"Generos",value:[]})
     }
   };
 
@@ -83,7 +87,7 @@ export const CrearAnime = () => {
     if(portadaCap) {
       const imgurl = await fileupload(portadaCap)
       setcapitulos([...capitulos,{...inputValue,portadaCap:imgurl}])
-      onResetForm()
+      onResetFormCap()
       setPreviewImageCap(undefined)
     } 
   }
@@ -129,7 +133,7 @@ export const CrearAnime = () => {
               id="nombre"
               placeholder="Ej:One Piece"
               value={name}
-              onChange={oninputChange}
+              onChange={(e)=> setKey({key:"name",value:e.target.value})}
               className="bg-transparent text-white border-b-[1px] border-amber-600 h-[40px] px-[10px]  outline-none"
             />
           </div>
@@ -170,8 +174,7 @@ export const CrearAnime = () => {
           </div>
         </div>
         <div className="h-full  flex flex-col justify-around items-center">
-          <div className="generos w-[550px] overflow-hidden  ">
-            <h1 className="text-white text-center">Generos</h1>
+          <div className="generos w-[550px] h-[200px] flex  items-center justify-around  ">
             <GenerosDropdown setKey={setKey} />
           </div>
           <div className=" w-[50%] flex flex-col justify-center mt-[50px] box-border ">

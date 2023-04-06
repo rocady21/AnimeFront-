@@ -21,10 +21,7 @@ export const AppRouter = () => {
         <Route path='/mangas' element = {<MangaPage/>}/>
         <Route path='/post' element = {<PostPage/>}/>
         <Route path='/perfil' element = {<PerfilPage/>}/>
-        <Route path='/animes/:nombreAnime' element = {<AnimeInfoCompleto/>}/>
-
-
-
+        <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
     </Routes>
     
     </div>

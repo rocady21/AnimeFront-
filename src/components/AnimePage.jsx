@@ -17,10 +17,10 @@ export const AnimePage = () => {
   
   return (
     isLoading ===true? 
-    (<div className='grid grid-cols-4 p-[30px] relative'>
+    (<div className='grid grid-cols-4 p-[50px] relative'>
       {
       animes.map((anime) => {
-        return <AnimeCard anime= {anime}/>
+        return <AnimeCard anime= {anime} key={anime._id}/>
       })
       }
     </div>):

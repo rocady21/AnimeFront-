@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import { useUserSlice } from '../hooks/useUserSlice'
 
 export const LoginPage = () => {
 
 // <NavLink to={"/register"}>Registrarme</NavLink> 
-
+  const navigator = useNavigate();
   const formLogin = {
     email: "",
     password: ""
@@ -20,6 +20,7 @@ export const LoginPage = () => {
     e.preventDefault()
     console.log("1")
     startLogin({email:email,password:password})
+    navigator("/admin");
   }
 
   

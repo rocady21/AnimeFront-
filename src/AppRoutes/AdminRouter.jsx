@@ -5,16 +5,17 @@ import { AdminPage } from '../components/adminComponents.jsx/AdminPage'
 import { NavBarAdmin } from '../components/adminComponents.jsx/NavbarAdmin'
 import { CrearAnime } from '../components/adminComponents.jsx/CrearAnime'
 import { AnimePage } from '../components/AnimePage'
+import { AnimeInfoCompleto } from '../components/AnimeInfoCompleto'
 
 export const AdminRouter = () => {
   return (
-    <div className='w-full h-full box-content'>
+    <div className='w-full h-[800px] box-content'>
     <NavBarAdmin/>
     <Routes>
-        <Route path='/*' element = {<AdminPage/>}/>
         <Route path='/crearAnime' element = {<CrearAnime/>}/>
         <Route path='/animes' element = {<AnimePage/>}/>
-
+        <Route path='/animes/:nombreAnime' element = {<AnimeInfoCompleto/>}/>
+        <Route path='/admin' element = {<AdminPage/>}/>
     </Routes>
     
     </div>

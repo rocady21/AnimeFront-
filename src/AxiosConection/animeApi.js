@@ -13,7 +13,8 @@ animeApi.interceptors.request.use(config => {
    
     config.headers = {
         ...config.headers,
-        "x-token": localStorage.getItem("token")
+        "x-token": localStorage.getItem("token"),
+        "animeUid": localStorage.getItem("animeUid")
     }
    
     return config

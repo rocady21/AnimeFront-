@@ -54,20 +54,21 @@ export const useUserSlice = () => {
     }
 
     
-    const CheckAuthToken = ()=> {
+    const CheckAuthToken = async ()=> {
         const token = localStorage.getItem("token")
         if(!token) {
             Dispatch(onLogout());
         }
-
-        
         try {            
-            const {data} = animeApi.get("auth/revalidarJWT");
-            localStorage.setItem("token",data.token);
-            localStorage.setItem("token-init-date", new Date().getTime())
-            Dispatch(onLogin({name:data.name,uid:data.uid}))
+            const {data} = await animeApi.get("auth/validarUserInfoByToken");
+            if (data.ok) {
+                console.log("si")
+                Dispatch(onLogin(data?.userInfo))
+            } else {
+                console.log("n")
+                Dispatch(onLogout());
+            }
         } catch (error) {
-            
             Dispatch(onLogout())
         }
 

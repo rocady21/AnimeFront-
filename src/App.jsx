@@ -7,7 +7,6 @@ LoginRouter
 export const App = () => {
   return(
     <div className='w-full h-full'>
-      
       <LoginRouter/>
     </div>
     )

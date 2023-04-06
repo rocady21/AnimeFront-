@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const AnimeInfo = ({ anime, status }) => {
     const navigate = useNavigate()
     const MostrarInfo = ()=> {
-        navigate(`/animes/${anime.name}`)
+        navigate(`/animes/${anime._id}`)
     }
     return (
     <div className="ml-[200px] infoAnime w-[400px] h-[400px] bg-black absolute rounded-[30px] z-01">

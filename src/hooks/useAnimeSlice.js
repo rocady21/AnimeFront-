@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { createNewAnime, onLoadAnimes } from "../store/Slices/animeSlice/animeSlice"
+import { createNewAnime, onFilterAnimeById, onLoadAnimes } from "../store/Slices/animeSlice/animeSlice"
 import { onLogin } from "../store/Slices/userSlice/userSlice"
-
 
 export const useAnimeSlice = () => {
 
     const dispach = useDispatch()
-    const {animes,isLoading} = useSelector((state) => state.anime)
+    const {animes,isLoading,results} = useSelector((state) => state.anime)
     
     const newAnime = async({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
 
@@ -32,11 +31,25 @@ export const useAnimeSlice = () => {
             
         }
     }
+    const filterAnimeById = async(uid)=> {
+        
+        localStorage.setItem("animeUid",uid)
+
+        try {
+            const {data} = await animeApi.get("/anime/getAnimebyId")
+            dispach(onFilterAnimeById(data.anime))
+            console.log(data)
+        } catch (error) {
+            
+        }
+    }
+    
     return {
         LoadAnimes,
         animes,
         isLoading,
         newAnime,
-        
+        filterAnimeById,
+        results
   }
 }
