@@ -41,13 +41,11 @@ export const CrearAnime = () => {
 
   const { newAnime } = useAnimeSlice();
 
-  const CrearAnime = async(e) => {
-    e.preventDefault();
-    if(portadaCap) {
+  const CrearAnime = async() => {
+    if(Portada) {
       const imgurlPortada = await fileupload(Portada)
       newAnime({name:name,Portada:imgurlPortada,fechaEmision:fechaEmision,FechaFinalizacion:FechaFinalizacion,Capitulos:capitulos,Generos:Generos,sinopsis});
       onResetForm()
-      setPreviewImageCap(undefined)
       setPreviewImage(undefined)
       setKey({key:"Generos",value:[]})
     }
@@ -83,12 +81,14 @@ export const CrearAnime = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFileCap]);
 
-  const loadCap = async()=> {
+  const loadCap = async(e)=> {
+    e.preventDefault();
     if(portadaCap) {
       const imgurl = await fileupload(portadaCap)
       setcapitulos([...capitulos,{...inputValue,portadaCap:imgurl}])
       onResetFormCap()
       setPreviewImageCap(undefined)
+      
     } 
   }
 
