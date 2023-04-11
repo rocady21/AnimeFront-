@@ -10,7 +10,6 @@ export const Mainpage = () => {
   const {user} = useUserSlice()
 
   const {rol} = user
-  console.log(user)
   
   return (
     <div className='w-full h-full'>

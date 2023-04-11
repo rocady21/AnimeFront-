@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch} from "../store/Slices/animeSlice/animeSlice"
+import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch, onSearchAnime} from "../store/Slices/animeSlice/animeSlice"
 import { onLogin } from "../store/Slices/userSlice/userSlice"
 
 export const useAnimeSlice = () => {
@@ -9,10 +9,11 @@ export const useAnimeSlice = () => {
     const {animes,isLoading,results,resultsSearch} = useSelector((state) => state.anime)
     
     const newAnime = async({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
-
+        console.log("aqui si entro")
         try {
             //peticion post a la base de datos
             const resp = await animeApi.post("/anime/new",{name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})
+            console.log(resp)
         } catch (error) {
             console.log(error)
         }
@@ -54,6 +55,21 @@ export const useAnimeSlice = () => {
             dispach(onClearResultsSearch())
         }
     }
+
+    const searchAnime = (valueSearch)=> {
+
+        const animesByName = animes.filter((anime)=> {
+            return anime.name.includes(valueSearch)
+        })
+
+        if(animesByName[0]) {
+            dispach(onSearchAnime(animesByName))
+        } else {
+            dispach(onClearResultsSearch())
+
+        }
+
+    }
     
     return {
         LoadAnimes,
@@ -63,6 +79,7 @@ export const useAnimeSlice = () => {
         filterAnimeById,
         results,
         filterAnimeCap,
-        resultsSearch
+        resultsSearch,
+        searchAnime
   }
 }

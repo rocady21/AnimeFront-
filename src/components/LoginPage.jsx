@@ -18,7 +18,6 @@ export const LoginPage = () => {
   const {status,user} = useSelector((state) => state.user)
   const onSubmit = (e)=> {
     e.preventDefault()
-    console.log("1")
     startLogin({email:email,password:password})
     navigator("/admin");
   }

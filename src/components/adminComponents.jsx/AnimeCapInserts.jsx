@@ -8,7 +8,7 @@ export const AnimeCapInserts = ({infoCap}) => {
         <img src={portadaCap} alt="" className='w-[120px] h-full' />
         <div className='p-[20px] h-full w-full text-white flex flex-col justify-between'>
               <div className='flex flex-row'>
-                <p clas>E{Capitulo}</p> <p> -{nameCapitulo}</p>
+                <p>E{Capitulo}</p> <p> -{nameCapitulo}</p>
               </div>
               <div className=' flex flex-row justify-between text-gray-400'>
                 <p>Subtitulado</p>

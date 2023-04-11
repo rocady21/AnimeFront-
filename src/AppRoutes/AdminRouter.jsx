@@ -6,6 +6,7 @@ import { NavBarAdmin } from '../components/adminComponents.jsx/NavbarAdmin'
 import { CrearAnime } from '../components/adminComponents.jsx/CrearAnime'
 import { AnimePage } from '../components/AnimePage'
 import { AnimeInfoCompleto } from '../components/AnimeInfoCompleto'
+import { SearchPage } from '../components/SearchPage'
 
 export const AdminRouter = () => {
   return (
@@ -16,6 +17,8 @@ export const AdminRouter = () => {
         <Route path='/animes' element = {<AnimePage/>}/>
         <Route path='/animes/:nombreAnime' element = {<AnimeInfoCompleto/>}/>
         <Route path='/admin' element = {<AdminPage/>}/>
+        <Route path='/searchPage' element = {<SearchPage/>}/>
+
     </Routes>
     
     </div>

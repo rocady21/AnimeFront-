@@ -15,7 +15,6 @@ export const useUserSlice = () => {
     const startLogin = async({email,password})=> {
         // mandar a disparar onChecking
         try {
-            console.log("2")
             // login a bd
             // peticion a base de datos
             const {data} = await animeApi.post("/auth/login",{email,password});
@@ -32,21 +31,20 @@ export const useUserSlice = () => {
         }
     }
 
-    const RegisterUsuario = async({name,email,password})=> {
+    const RegisterUsuario = async({photo,name,email,password})=> {
 
         try {
             // peticion a bdd
             const rol = "user"
-            const resp = await animeApi.post("/auth/new",{name,email,password,rol});
+            const resp = await animeApi.post("/auth/new",{photo,name,email,password,rol});
             // guardar token en localStorage
             localStorage.setItem("token",resp.token)
             localStorage.setItem("token-init-date",new Date().getTime())
 
-            Dispatch(onLogin({name:resp.name,uid:resp.uid,rol:resp.rol}))
+            Dispatch(onLogin({name:resp.name,uid:resp.uid,rol:resp.rol,photo:resp.photo}))
 
         } catch (error) {
             Dispatch(onLogout(error.response.data?.msg))
-            console.log(error)
             setTimeout(() => {
                 CLearMessageError()
             }, 1000);
@@ -62,10 +60,9 @@ export const useUserSlice = () => {
         try {            
             const {data} = await animeApi.get("auth/validarUserInfoByToken");
             if (data.ok) {
-                console.log("si")
+                console.log(data.doc)
                 Dispatch(onLogin(data?.userInfo))
             } else {
-                console.log("n")
                 Dispatch(onLogout());
             }
         } catch (error) {
