@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch, onSearchAnime} from "../store/Slices/animeSlice/animeSlice"
+import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch, onSearchAnime, onGetCapByNumPage, onClearGetCapByNumPage} from "../store/Slices/animeSlice/animeSlice"
 import { onLogin } from "../store/Slices/userSlice/userSlice"
 
 export const useAnimeSlice = () => {
 
     const dispach = useDispatch()
-    const {animes,isLoading,results,resultsSearch} = useSelector((state) => state.anime)
+    const {animes,isLoading,results,resultsSearch,infoCapPage} = useSelector((state) => state.anime)
     
     const newAnime = async({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
         console.log("aqui si entro")
@@ -33,11 +33,8 @@ export const useAnimeSlice = () => {
         }
     }
     const filterAnimeById = async(uid)=> {
-        
-        localStorage.setItem("animeUid",uid)
-
         try {
-            const {data} = await animeApi.get("/anime/getAnimebyId")
+            const {data} = await animeApi.post("/anime/getAnimebyId",{uid})
             dispach(onFilterAnimeById(data.anime))
             console.log(data)
         } catch (error) {
@@ -70,6 +67,21 @@ export const useAnimeSlice = () => {
         }
 
     }
+
+     const getCapituloById = (anime,numCapitulo)=> {
+        const filterCap = anime.Capitulos.find((cap)=> {
+            return numCapitulo === cap.Capitulo
+        })
+        if(filterCap) {
+            dispach(onGetCapByNumPage(filterCap))
+            console.log("existe")
+        }else {
+            dispach(onClearGetCapByNumPage())
+            console.log("no existe")
+        }
+    }
+    
+
     
     return {
         LoadAnimes,
@@ -80,6 +92,8 @@ export const useAnimeSlice = () => {
         results,
         filterAnimeCap,
         resultsSearch,
-        searchAnime
+        searchAnime,
+        getCapituloById,
+        infoCapPage
   }
 }

@@ -8,6 +8,7 @@ import { MangaPage } from '../components/MangaPage'
 import { NavBar } from '../components/miniComponents/NavBar'
 import { PerfilPage } from '../components/PerfilPage'
 import { PostPage } from '../components/PostPage'
+import { VerCapAnime } from '../components/VerCapAnime'
 
 
 export const AppRouter = () => {
@@ -22,6 +23,7 @@ export const AppRouter = () => {
         <Route path='/post' element = {<PostPage/>}/>
         <Route path='/perfil' element = {<PerfilPage/>}/>
         <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
+
     </Routes>
     
     </div>

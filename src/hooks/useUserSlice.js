@@ -23,7 +23,7 @@ export const useUserSlice = () => {
             localStorage.setItem("token-init-date",new Date().getTime())
             
             //guardar en el sotre
-            Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol}))
+            Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data}))
 
         } catch (error) {
             console.log(error.response.data)

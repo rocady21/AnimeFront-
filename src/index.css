@@ -12,3 +12,7 @@ body {
     flex-direction: column;
 }
 
+.button1 {
+    filter: invert(97%) sepia(6%) saturate(516%) hue-rotate(123deg) brightness(111%) contrast(89%);
+}
+

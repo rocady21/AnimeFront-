@@ -272,7 +272,7 @@ export const CrearAnime = () => {
             <div className="text-white text-[20px] p-[20px]">No hay Capitulo agregado</div>
           } 
           </div>
-          <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2 ">Crear Anime</button>
+          <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2">Crear Anime</button>
 
         </div>
       </form>
