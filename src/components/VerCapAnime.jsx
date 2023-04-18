@@ -5,20 +5,26 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import { useState } from "react";
 import { useUserSlice } from "../hooks/useUserSlice";
+import { ComentarioItem } from "./ComentarioItem";
+import SendIcon from '@mui/icons-material/Send';
 
 export const VerCapAnime = ({ numeroCap, anime }) => {
-  console.log(numeroCap);
-  console.log("coso");
-  console.log(anime);
+
   const { getCapituloById, infoCapPage, results } = useAnimeSlice();
     const { user} = useUserSlice()
   const [stateLike, setstateLike] = useState(0);
+  const [Comentario, setComentario] = useState("");
   const [stateDisLike, setstateDisLike] = useState(0);
+  const {resultsComentarios,AgregarComentario,CargarComentarios} = useAnimeSlice()
+
+  const covertIntNumCap = parseInt(numeroCap);
 
   useEffect(() => {
-    const covertIntNumCap = parseInt(numeroCap);
     getCapituloById(anime, covertIntNumCap);
+    CargarComentarios({idAnime:anime._id,NumeroCap:covertIntNumCap})
   }, []);
+
+
 
   const IncrementLiked = () => {
     setstateLike(stateLike + 1);
@@ -27,6 +33,18 @@ export const VerCapAnime = ({ numeroCap, anime }) => {
     setstateDisLike(stateDisLike + 1);
   };
 
+console.log("usuarioID")
+console.log(anime)
+
+  const addComentario = (e)=> {
+    e.preventDefault()
+    if(Comentario.length>=5) {
+      AgregarComentario({idAnime:anime._id,id_User:user._id,NumeroCap:covertIntNumCap,Comentario:Comentario,photo:user.photo})
+    } else {
+      console.log("el comentario es muy corto")
+    }
+  }
+  
   return (
     <div className=" w-full h-full">
       <div className="h-[700px]  bg-black m-auto relative ">
@@ -93,13 +111,29 @@ export const VerCapAnime = ({ numeroCap, anime }) => {
           <div className="comentarios min-h-[400px] mt-[50px] ">
             <div className="flex flex-col">
               <h1 className="text-white text-[30px] mb-[50px]">Agregar Comentario</h1>
-              <div className="flex flex-row items-center">
+              <form onSubmit={addComentario} className="flex flex-row items-center justify-between">
                 <div className="w-[10%] flex items-start">
-                    <img className="w-[50px] h-[50px] rounded-full" src={user.photo} alt="" />
+                    <img className="w-[50px] h-[50px] rounded-full object-cover items-cover" src={user.photo} alt="" />
                 </div>
-              <textarea className="bg-slate-600 w-[70%] text-white px-[20px] pt-[10px] rounded-[5px] min-h-[50px] max-h-[100px]" rows="3" cols="" placeholder="Escriba Su comentario" ></textarea>
-                <button className="w-[20%] bg-amber-600 text-white h-[50px]   px-2">Agregar Comentario</button>
-              </div>
+              <textarea className="bg-slate-600 w-full text-white px-[20px] pt-[10px] rounded-[5px] min-h-[50px] max-h-[100px]" value={Comentario} onChange={(e)=> setComentario(e.target.value)} rows="3" cols="" placeholder="Escriba Su comentario" ></textarea>
+              <button className="w-[50px] p-[10px] m-4 h-[50px] bg-amber-600 rounded-full flex flex-row items-center justify-center" ><SendIcon sx={{color:"white", fontSize:25}}/></button>
+              </form>
+            </div>
+            <div className="comentarios w-full px-[40px] mt-[50px]  py-[50px] bg-black/20 rounded-[20px]">
+              {
+                (resultsComentarios[0])? (
+                  
+                  resultsComentarios.map((comentario)=> {
+                    return <ComentarioItem comentario={comentario} />
+                  })
+                ):
+                (
+                  <div className="text-center p-[50px] bg-black/30 rounded-[25px]">
+                    <p className="text-[30px] text-white">No hay Comentarios...</p>
+                  </div>
+                )
+
+              }
             </div>
           </div>
         </div>

@@ -9,7 +9,8 @@ export const animeSlice = createSlice({
     isLoading:false,
     results:{},
     resultsSearch:[],
-    infoCapPage:[]
+    infoCapPage:[],
+    resultsComentarios:[]
   },
   reducers: {
     onLoadAnimes: (state,{payload})=> {
@@ -39,11 +40,14 @@ export const animeSlice = createSlice({
     },
     onClearGetCapByNumPage:(state,{payload})=> {
       state.infoCapPage = []
+    },
+    onLoadComents:(state,{payload})=> {
+      state.resultsComentarios = payload
     }
     
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {onLoadAnimes,createNewAnime,onFilterAnimeById,onFilterAnimeByCap,onClearResultsSearch,onSearchAnime,onGetCapByNumPage,onClearGetCapByNumPage} = animeSlice.actions
+export const {onLoadAnimes,createNewAnime,onFilterAnimeById,onFilterAnimeByCap,onClearResultsSearch,onSearchAnime,onGetCapByNumPage,onClearGetCapByNumPage,onLoadComents} = animeSlice.actions
 

@@ -17,7 +17,7 @@ export const AnimeCard = ({anime}) => {
     }
     
   return (
-    <div className='animeCard h-[325px] w-[200px] z-02 ' onMouseEnter={MostrarInfo} onMouseLeave={QuitarInfo}>
+    <div className='animeCard h-[325px] w-[200px] z-02 m-auto mt-[0px] ' onMouseEnter={MostrarInfo} onMouseLeave={QuitarInfo}>
         {
             info && <AnimeInfo anime={anime} status= {info} />
 

@@ -8,6 +8,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import { AnimeCapCard } from "./AnimeCapCard";
 import { VerCapAnime } from "./VerCapAnime";
+import { VerCapAnimeisLoading } from "./VerCapAnimeisLoading";
 
 
 export const AnimeInfoCompleto = () => {
@@ -17,6 +18,7 @@ export const AnimeInfoCompleto = () => {
   const [search, setsearch] = useState("");
   const {Capitulos} = results;
   console.log(params)
+  console.log("Xd")
 
   const guardarValorSearch =(e)=> {
     setsearch(e.target.value)
@@ -103,7 +105,7 @@ export const AnimeInfoCompleto = () => {
                     Capitulos? 
                     (
                       Capitulos.map((capitulo)=> {
-                        return <AnimeCapCard infoCap = {capitulo} key={capitulo.capitulo} idAnime= {nombreAnime}/>
+                        return <AnimeCapCard infoCap = {capitulo} key={capitulo.capitulo} idAnime= {idAnime}/>
                       })
                       ) : 
                     (
@@ -124,7 +126,7 @@ export const AnimeInfoCompleto = () => {
         <VerCapAnime numeroCap = {idCap} anime = {results}/>
 
         ) : 
-        null
+        <VerCapAnimeisLoading/>
       }      
 
     </div>

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch, onSearchAnime, onGetCapByNumPage, onClearGetCapByNumPage} from "../store/Slices/animeSlice/animeSlice"
+import { createNewAnime, onFilterAnimeByCap, onFilterAnimeById, onLoadAnimes ,onClearResultsSearch, onSearchAnime, onGetCapByNumPage, onClearGetCapByNumPage, onLoadComents} from "../store/Slices/animeSlice/animeSlice"
 import { onLogin } from "../store/Slices/userSlice/userSlice"
 
 export const useAnimeSlice = () => {
 
     const dispach = useDispatch()
-    const {animes,isLoading,results,resultsSearch,infoCapPage} = useSelector((state) => state.anime)
+    const {animes,isLoading,results,resultsSearch,infoCapPage,resultsComentarios} = useSelector((state) => state.anime)
     
     const newAnime = async({name,Portada,fechaEmision,FechaFinalizacion,Capitulos,Generos,sinopsis})=> {
         console.log("aqui si entro")
@@ -80,8 +80,53 @@ export const useAnimeSlice = () => {
             console.log("no existe")
         }
     }
-    
 
+    const AgregarComentario = async({idAnime,id_User,NumeroCap,Comentario,photo}) => {
+        
+        
+        const CamposaActualizar = {
+            id_User:id_User,
+            photo:photo,
+            Comentario:Comentario,
+            valoracion:5,
+            Fecha:new Date()
+        }
+
+        try {
+
+            console.log("uwu")
+            console.log(CamposaActualizar)
+            const {data} = await animeApi.put("/anime/updateComentario",{CamposaActualizar,idAnime,NumeroCap})
+            console.log(data)
+
+        } catch (error) {
+            console.log("no se pudo agregar el comentario")
+            console.log(error)
+        }
+
+
+
+
+    }
+
+    const CargarComentarios = async({idAnime,NumeroCap}) => {
+        try {
+            
+            const {data} = await animeApi.post("/anime/getComentariosbyCap",{idAnime,NumeroCap})
+            if(data) {
+                console.log("Hola al fin")
+                console.log(data)
+                dispach(onLoadComents(data.comentariosFInal))
+            } else {
+                throw Error("hubo un error al cargar los comentarios")
+            }
+
+        } catch (error) {
+            
+        }
+    }
+    
+    
     
     return {
         LoadAnimes,
@@ -94,6 +139,9 @@ export const useAnimeSlice = () => {
         resultsSearch,
         searchAnime,
         getCapituloById,
-        infoCapPage
+        infoCapPage,
+        AgregarComentario,
+        CargarComentarios,
+        resultsComentarios,
   }
 }

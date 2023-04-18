@@ -15,7 +15,7 @@ export const AdminRouter = () => {
     <Routes>
         <Route path='/crearAnime' element = {<CrearAnime/>}/>
         <Route path='/animes' element = {<AnimePage/>}/>
-        <Route path='/animes/:nombreAnime' element = {<AnimeInfoCompleto/>}/>
+        <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
         <Route path='/admin' element = {<AdminPage/>}/>
         <Route path='/searchPage' element = {<SearchPage/>}/>
 

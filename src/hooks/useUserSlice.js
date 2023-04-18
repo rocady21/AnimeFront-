@@ -21,9 +21,9 @@ export const useUserSlice = () => {
             // guardar token en localStorage
             localStorage.setItem("token",data.token)
             localStorage.setItem("token-init-date",new Date().getTime())
-            
+            console.log(data)
             //guardar en el sotre
-            Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data}))
+            Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data.photo}))
 
         } catch (error) {
             console.log(error.response.data)
@@ -40,9 +40,7 @@ export const useUserSlice = () => {
             // guardar token en localStorage
             localStorage.setItem("token",resp.token)
             localStorage.setItem("token-init-date",new Date().getTime())
-
             Dispatch(onLogin({name:resp.name,uid:resp.uid,rol:resp.rol,photo:resp.photo}))
-
         } catch (error) {
             Dispatch(onLogout(error.response.data?.msg))
             setTimeout(() => {
