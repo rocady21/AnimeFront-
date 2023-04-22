@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import { useUserSlice } from '../hooks/useUserSlice'
+import { useState } from 'react'
+import { ErrorModal } from './ErrorModal'
 
 export const LoginPage = () => {
 
@@ -16,16 +18,31 @@ export const LoginPage = () => {
   const {oninputChange,inputValue,email,password} = useForm(formLogin)
   const {startLogin} = useUserSlice()
   const {status,user} = useSelector((state) => state.user)
+  const [errorModal,seterrorModal]= useState(false)
+  const [MessageError,setMessageError] = useState("")
+
+
   const onSubmit = (e)=> {
     e.preventDefault()
-    startLogin({email:email,password:password})
+    if (!email && !password) {
+      seterrorModal(true)
+      setMessageError("Debe de ingresar un correo y una contraseña valida")
+    } else if(!password) {
+      seterrorModal(true)
+      setMessageError("Debe de ingresar una contraseña valida")
+    } else if(!email) {
+      seterrorModal(true)
+      setMessageError("Debe de ingresar un email valido")
+    } else {
+      startLogin({email:email,password:password})
+    }
     navigator("/admin");
   }
 
   
   return (
-    <>
-    <div className='flex flex-col items-center w-full h-full h-full w-full relative '>
+    <> 
+    <div className='flex flex-col items-center w-full h-full h-full w-full relative z-1'>
 
       <div className="formulario w-[600px] h-[500px] flex justify-center items-center mt-[200px] bg-zinc-900 shadow-2xl shadow-amber-500/20">
       <form className='flex flex-col  w-full h-full justify-center px-[50px] py-[30px] flex justify-around ' onSubmit={onSubmit}>
@@ -48,6 +65,10 @@ export const LoginPage = () => {
 
       </div>
     </div>
+
+    {
+      errorModal === true && <ErrorModal error={MessageError} stateModal={()=> seterrorModal}/>
+    }
     </>
   )
 }

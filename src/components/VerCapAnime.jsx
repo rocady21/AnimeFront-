@@ -33,17 +33,22 @@ export const VerCapAnime = ({ numeroCap, anime }) => {
     setstateDisLike(stateDisLike + 1);
   };
 
-console.log("usuarioID")
-console.log(anime)
+
+
 
   const addComentario = (e)=> {
     e.preventDefault()
     if(Comentario.length>=5) {
       AgregarComentario({idAnime:anime._id,id_User:user._id,NumeroCap:covertIntNumCap,Comentario:Comentario,photo:user.photo})
+      setComentario("")
     } else {
       console.log("el comentario es muy corto")
     }
   }
+
+  useEffect(()=> {
+        CargarComentarios({idAnime:anime._id,NumeroCap:covertIntNumCap})
+  },[])
   
   return (
     <div className=" w-full h-full">
