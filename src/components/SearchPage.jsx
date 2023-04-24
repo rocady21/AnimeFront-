@@ -14,12 +14,12 @@ export const SearchPage = () => {
   return (
     <div className='p-[50px]'>
         {
-            resultsSearch?
+            resultsSearch[0]?
                 resultsSearch.map((anime)=> {
                     return <AnimeCard anime= {anime} key={anime._id}/>
                 }):
-                <div>
-                    No hay Capitulos con ese nombre
+                <div className='text-center text-white text-[25px]'>
+                    No hay Animes con ese nombre.
                 </div>
 
 

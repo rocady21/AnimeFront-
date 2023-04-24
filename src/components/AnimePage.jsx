@@ -17,7 +17,7 @@ export const AnimePage = () => {
   
   return (
     isLoading ===true? 
-    (<div className='w-[60%]   m-auto mt-[0px] h-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4    py-[50px]  '>
+    (<div className='w-[60%]  m-auto mt-[0px] h-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4    py-[50px]  '>
       {
       animes.map((anime) => {
         return <AnimeCard anime= {anime} key={anime._id}/>
