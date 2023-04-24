@@ -23,6 +23,7 @@ export const NavBar = () => {
     searchAnime(valueSearch)
     setvalueSearch("")
   }
+  console.log("coso")
 
   return (
     <div className='w-full h-[80px] bg-black flex items-center justify-between text-white'>
