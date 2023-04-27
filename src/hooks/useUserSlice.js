@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import animeApi from "../AxiosConection/animeApi"
-import { CLearMessageError, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
+import { CLearMessageError, onErrorLogin, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
 
 
 
@@ -23,10 +23,12 @@ export const useUserSlice = () => {
             localStorage.setItem("token-init-date",new Date().getTime())
             console.log(data)
             //guardar en el sotre
-            Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data.photo}))
+            if(data.ok === true) {
+                Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data.photo}))
+            }
 
         } catch (error) {
-            console.log(error.response.data)
+            Dispatch(onErrorLogin(error.response.data.msg))
             localStorage.clear()
         }
     }
@@ -40,7 +42,6 @@ export const useUserSlice = () => {
             // guardar token en localStorage
             localStorage.setItem("token",resp.token)
             localStorage.setItem("token-init-date",new Date().getTime())
-            Dispatch(onLogin({name:resp.name,uid:resp.uid,rol:resp.rol,photo:resp.photo}))
         } catch (error) {
             Dispatch(onLogout(error.response.data?.msg))
             setTimeout(() => {
@@ -81,6 +82,7 @@ export const useUserSlice = () => {
         startLogin,
         CheckAuthToken,
         startLogout,
-        RegisterUsuario
+        RegisterUsuario,
+        messageError
   }
 }

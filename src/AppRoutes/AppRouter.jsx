@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnimeInfoCompleto } from '../components/AnimeInfoCompleto'
 import { AnimePage } from '../components/AnimePage'
 import { InicioPage } from '../components/InicioPage'
@@ -10,21 +10,39 @@ import { PerfilPage } from '../components/PerfilPage'
 import { PostPage } from '../components/PostPage'
 import { VerCapAnime } from '../components/VerCapAnime'
 import { SearchPage } from '../components/SearchPage'
+import PerfilRoutes from '../helpers/PerfilRoutes'
+import { InfoUser } from '../components/PerfilComponents/informacionUser'
+import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
+
 
 
 export const AppRouter = () => {
+  
+  const {pathname} = useLocation()
+
+  const coso = pathname === PerfilRoutes.post() || pathname === PerfilRoutes.info() || pathname === PerfilRoutes.AnimesFav() 
+
   return (
     <div className='h-full w-full'>
+    
     <NavBar/>
     <Routes>
-        <Route path='/*' element = {<AnimePage/>}/>
-        <Route path='/inicio' element = {<InicioPage/>}/>
-        <Route path='/anime' element = {<AnimePage/>}/>
-        <Route path='/mangas' element = {<MangaPage/>}/>
-        <Route path='/post' element = {<PostPage/>}/>
-        <Route path='/perfil' element = {<PerfilPage/>}/>
-        <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
-        <Route path='/searchPage' element = {<SearchPage/>}/>
+      <Layout>
+        <PerfilPage renderChildren ={coso} >
+          <Route path='/*' element = {<AnimePage/>}/>
+          <Route path='/inicio' element = {<InicioPage/>}/>
+          <Route path='/anime' element = {<AnimePage/>}/>
+          <Route path='/mangas' element = {<MangaPage/>}/>
+          <Route path='/post' element = {<PostPage/>}/>
+          <Route path='/perfil' element = {<PerfilPage/>}/>
+          <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
+          <Route path='/searchPage' element = {<SearchPage/>}/>
+          <Route path={PerfilRoutes.post} element = {<PostPage/>}/>
+          <Route path={PerfilRoutes.info} element = {<InfoUser/>}/>
+          <Route path={PerfilRoutes.AnimesFav} element = {<AnimesFav/>}/>
+
+        </PerfilPage>
+      </Layout>
 
 
     </Routes>

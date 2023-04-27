@@ -3,7 +3,7 @@ import { useForm } from "../hooks/useForm";
 import { useUserSlice } from "../hooks/useUserSlice";
 import { useEffect } from "react";
 import { fileupload } from "../helpers/uploadFile";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const FormularioRegister = {
   photo: "",
@@ -19,6 +19,7 @@ export const Registerpage = () => {
   const [previewImage, setpreviewImage] = useState(undefined);
   const { RegisterUsuario } = useUserSlice();
 
+  const navigate = useNavigate()
   useEffect(() => {
     if(!selectedFile) {
       setpreviewImage(undefined)
@@ -37,7 +38,7 @@ export const Registerpage = () => {
     e.preventDefault();
     const imgUrl = await fileupload(photo)
     RegisterUsuario({photo:imgUrl, name: name, email: email, password: password });
-
+    navigate("/login")
   };
 
   return (

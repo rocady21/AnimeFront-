@@ -15,12 +15,11 @@ export const LoginPage = () => {
     password: ""
   }
 
-  const {oninputChange,inputValue,email,password} = useForm(formLogin)
-  const {startLogin} = useUserSlice()
+  const {oninputChange,email,password} = useForm(formLogin)
+  const {startLogin,messageError} = useUserSlice()
   const {status,user} = useSelector((state) => state.user)
   const [errorModal,seterrorModal]= useState(false)
   const [MessageError,setMessageError] = useState("")
-
 
   const onSubmit = (e)=> {
     e.preventDefault()
@@ -33,10 +32,10 @@ export const LoginPage = () => {
     } else if(!email) {
       seterrorModal(true)
       setMessageError("Debe de ingresar un email valido")
-    } else {
+    } else if(email && password) {
       startLogin({email:email,password:password})
     }
-    navigator("/admin");
+    navigator("/animes");
   }
 
   
@@ -44,7 +43,7 @@ export const LoginPage = () => {
     <> 
     <div className='flex flex-col items-center w-full h-full h-full w-full relative z-1'>
 
-      <div className="formulario w-[600px] h-[500px] flex justify-center items-center mt-[200px] bg-zinc-900 shadow-2xl shadow-amber-500/20">
+      <div className="formulario w-[600px] h-[600px] flex justify-center items-center mt-[200px] bg-zinc-900 shadow-2xl shadow-amber-500/20  flex">
       <form className='flex flex-col  w-full h-full justify-center px-[50px] py-[30px] flex justify-around ' onSubmit={onSubmit}>
         <div className='flex flex-col'>
         <label htmlFor="email" className='text-white'>Ingrese su email</label>
@@ -67,7 +66,8 @@ export const LoginPage = () => {
     </div>
 
     {
-      errorModal === true && <ErrorModal error={MessageError} stateModal={()=> seterrorModal}/>
+      messageError? (<ErrorModal error={messageError} seterrorModal={(value)=> seterrorModal(value)}/>):
+      (errorModal === true && <ErrorModal error={MessageError} seterrorModal={(value)=> seterrorModal(value)} />)
     }
     </>
   )

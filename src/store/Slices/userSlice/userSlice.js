@@ -13,24 +13,29 @@ export const userSlice = createSlice({
     onChecking: (state)=> {
         state.status="checking";
         state.user = {};
-        state.errorMessage = undefined
+        state.messageError = undefined
     },
     onLogin:(state,{payload}) => {
         state.status = "authenticated",
         state.user = payload;
-        state.errorMessage = undefined
+        state.messageError = undefined
     },
     onLogout:(state,{payload}) => {
         state.status="not-authenticated";
         state.user = {}
-        state.errorMessage = payload
+        state.messageError = payload
     },
     CLearMessageError: (state) => {
       state.errorMessage= undefined
+    },
+    onErrorLogin:(state,{payload})=> {
+      state.status="not-authenticated";
+      state.user = {};
+      state.messageError = payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onChecking,onLogin,onLogout,CLearMessageError } = userSlice.actions
+export const { onChecking,onLogin,onLogout,CLearMessageError,onErrorLogin } = userSlice.actions
 
