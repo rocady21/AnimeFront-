@@ -3,13 +3,21 @@ import { useUserSlice } from '../hooks/useUserSlice'
 import { PostPage } from './PerfilComponents/PostPage'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { AnimesFav } from './PerfilComponents/AnimesFav'
+import { useState } from 'react'
+import { InfoPerfil } from './InfoPerfil'
+import { PostPagePerfil } from './PerfilComponents/PostPagePerfil'
+
 NavLink
 export const PerfilPage = ({children,renderChildren}) => {
 
   const { user } = useUserSlice()
+  const [page,setPage] = useState("post")
 
+  console.log(children)
+  console.log("holis1")
+  console.log(renderChildren)
+  console.log("holis2")
   return (
-    renderChildren?
     <div className='w-full h-full flex flex-col items-center'>
       <div className="foto w-[200px] h-[200px] bg-white/90 rounded-full m-auto mt-[100px] p-1">
         <img className='object-cover object-center w-full h-full rounded-full' src={user.photo} alt="" />
@@ -19,22 +27,24 @@ export const PerfilPage = ({children,renderChildren}) => {
       <div className='w-[60%]  bg-black/30 mt-[100px] text-white  '>
 
         <div className="buttonsNavigateProfile m-auto w-[50%] flex justify-around p-[30px]">
-          <NavLink to={"/perfil/post"}>
+          <button onClick={()=> setPage("post")}>
             <p>Posts</p>
-          </NavLink>
-          <NavLink to={"/perfil/informacion"}>
+          </button>
+          <button onClick={()=> setPage("animesFav")}>
             <p>Animes Favoritos</p>
-          </NavLink>
-          <NavLink to={"/perfil/AnimesFav"}>
+          </button>
+          <button onClick={()=> setPage("info")}>
             <p>Informacion</p>
-          </NavLink>
+          </button>
         </div>
 
         <div className="info  bg-black py-[50px] px-[100px]">
-            {children}
+            {
+              (page ==="post")? <PostPagePerfil/> : (page === "animesFav")? <AnimesFav/> : <InfoPerfil/>
+            }
         </div>
     </div>
 
-    </div > : children
+    </div > 
   )
 }

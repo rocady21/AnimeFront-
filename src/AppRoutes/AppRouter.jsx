@@ -7,12 +7,14 @@ import { Mainpage } from '../components/Mainpage'
 import { MangaPage } from '../components/MangaPage'
 import { NavBar } from '../components/miniComponents/NavBar'
 import { PerfilPage } from '../components/PerfilPage'
-import { PostPage } from '../components/PostPage'
+
 import { VerCapAnime } from '../components/VerCapAnime'
 import { SearchPage } from '../components/SearchPage'
 import PerfilRoutes from '../helpers/PerfilRoutes'
 import { InfoUser } from '../components/PerfilComponents/informacionUser'
 import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
+import { PostPage } from '../components/PerfilComponents/PostPage'
+import { PostPageNav } from '../components/PostPageNav'
 
 
 
@@ -22,30 +24,27 @@ export const AppRouter = () => {
 
   const coso = pathname === PerfilRoutes.post() || pathname === PerfilRoutes.info() || pathname === PerfilRoutes.AnimesFav() 
 
+  console.log("holis")
+  console.log(PerfilRoutes.post)
   return (
     <div className='h-full w-full'>
-    
     <NavBar/>
-    <Routes>
-      <Layout>
-        <PerfilPage renderChildren ={coso} >
+      <PerfilPage renderChildren ={coso} >
+        <Routes>
           <Route path='/*' element = {<AnimePage/>}/>
           <Route path='/inicio' element = {<InicioPage/>}/>
           <Route path='/anime' element = {<AnimePage/>}/>
           <Route path='/mangas' element = {<MangaPage/>}/>
-          <Route path='/post' element = {<PostPage/>}/>
           <Route path='/perfil' element = {<PerfilPage/>}/>
+          <Route path='/post' element = {<PostPageNav/>}/>
           <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
           <Route path='/searchPage' element = {<SearchPage/>}/>
-          <Route path={PerfilRoutes.post} element = {<PostPage/>}/>
-          <Route path={PerfilRoutes.info} element = {<InfoUser/>}/>
-          <Route path={PerfilRoutes.AnimesFav} element = {<AnimesFav/>}/>
 
-        </PerfilPage>
-      </Layout>
-
-
-    </Routes>
+          <Route path={PerfilRoutes.post()} element = {<PostPage/>}/>
+          <Route path={PerfilRoutes.info()} element = {<InfoUser/>}/>
+          <Route path={PerfilRoutes.AnimesFav()} element = {<AnimesFav/>}/>
+        </Routes>
+      </PerfilPage>
     
     </div>
   )
