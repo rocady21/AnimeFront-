@@ -13,7 +13,6 @@ import { SearchPage } from '../components/SearchPage'
 import PerfilRoutes from '../helpers/PerfilRoutes'
 import { InfoUser } from '../components/PerfilComponents/informacionUser'
 import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
-import { PostPage } from '../components/PerfilComponents/PostPage'
 import { PostPageNav } from '../components/PostPageNav'
 
 
@@ -29,7 +28,6 @@ export const AppRouter = () => {
   return (
     <div className='h-full w-full'>
     <NavBar/>
-      <PerfilPage renderChildren ={coso} >
         <Routes>
           <Route path='/*' element = {<AnimePage/>}/>
           <Route path='/inicio' element = {<InicioPage/>}/>
@@ -39,13 +37,8 @@ export const AppRouter = () => {
           <Route path='/post' element = {<PostPageNav/>}/>
           <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
           <Route path='/searchPage' element = {<SearchPage/>}/>
-
-          <Route path={PerfilRoutes.post()} element = {<PostPage/>}/>
-          <Route path={PerfilRoutes.info()} element = {<InfoUser/>}/>
-          <Route path={PerfilRoutes.AnimesFav()} element = {<AnimesFav/>}/>
-        </Routes>
-      </PerfilPage>
-    
+          
+        </Routes>    
     </div>
   )
 }

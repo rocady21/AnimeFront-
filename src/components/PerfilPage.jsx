@@ -1,11 +1,10 @@
 import React from 'react'
 import { useUserSlice } from '../hooks/useUserSlice'
-import { PostPage } from './PerfilComponents/PostPage'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { AnimesFav } from './PerfilComponents/AnimesFav'
 import { useState } from 'react'
-import { InfoPerfil } from './InfoPerfil'
 import { PostPagePerfil } from './PerfilComponents/PostPagePerfil'
+import { InfoUser } from './PerfilComponents/informacionUser'
 
 NavLink
 export const PerfilPage = ({children,renderChildren}) => {
@@ -40,7 +39,7 @@ export const PerfilPage = ({children,renderChildren}) => {
 
         <div className="info  bg-black py-[50px] px-[100px]">
             {
-              (page ==="post")? <PostPagePerfil/> : (page === "animesFav")? <AnimesFav/> : <InfoPerfil/>
+              (page ==="post")? <PostPagePerfil/> : (page === "animesFav")? <AnimesFav/> : <InfoUser/>
             }
         </div>
     </div>
