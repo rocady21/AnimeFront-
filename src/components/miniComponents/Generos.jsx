@@ -105,7 +105,7 @@ export const GenerosDropdown = ({setKey}) => {
                 id="menu-item-0"
                 value="ciudad"
               >
-                <p>Select Ciudad</p>
+                <p>Select Tipo</p>
               </a>
             )}
           </div>

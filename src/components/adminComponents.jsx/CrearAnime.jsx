@@ -45,10 +45,8 @@ export const CrearAnime = () => {
 
   const CrearAnime = async(e) => {
       e.preventDefault()
-      console.log("aqui pasara a crearse")
       const imgurlPortada = await fileupload(Portada)
       newAnime({name:name,Portada:imgurlPortada,fechaEmision:fechaEmision,FechaFinalizacion:FechaFinalizacion,Capitulos:capitulos,Generos:Generos,sinopsis});
-      console.log("aqui ya se creo")
 
       // onResetForm()
       // setPreviewImage(undefined)

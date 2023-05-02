@@ -23,8 +23,6 @@ export const AppRouter = () => {
 
   const coso = pathname === PerfilRoutes.post() || pathname === PerfilRoutes.info() || pathname === PerfilRoutes.AnimesFav() 
 
-  console.log("holis")
-  console.log(PerfilRoutes.post)
   return (
     <div className='h-full w-full'>
     <NavBar/>

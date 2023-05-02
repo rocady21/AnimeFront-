@@ -23,7 +23,6 @@ export const NavBar = () => {
     searchAnime(valueSearch)
     setvalueSearch("")
   }
-  console.log("coso")
 
   return (
     <div className='w-full h-[80px] bg-black flex items-center justify-between text-white'>
@@ -51,7 +50,7 @@ export const NavBar = () => {
       <div className="flex flex-row items-center px-[50px] ">
         <NavLink className={"flex flex-row items-center"} to={"/perfil"}>
           <img className="w-[50px] h-[50px] bg-white mr-[15px] object-cover object-center rounded-full" src={photo || undefined} alt="" />
-          <p onClick={console.log(user)} className="mr-[30px]">Perfil</p>
+          <p className="mr-[30px]">Perfil</p>
         </NavLink>
         <button onClick={startLogout}>Logout</button>
       </div>

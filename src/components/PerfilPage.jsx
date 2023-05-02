@@ -5,19 +5,15 @@ import { AnimesFav } from './PerfilComponents/AnimesFav'
 import { useState } from 'react'
 import { PostPagePerfil } from './PerfilComponents/PostPagePerfil'
 import { InfoUser } from './PerfilComponents/informacionUser'
+import { ModalNewPost } from './Modals/ModalNewPost'
 
 NavLink
 export const PerfilPage = ({children,renderChildren}) => {
 
   const { user } = useUserSlice()
-  const [page,setPage] = useState("post")
-
-  console.log(children)
-  console.log("holis1")
-  console.log(renderChildren)
-  console.log("holis2")
+  const [page,setPage] = useState("post")  
   return (
-    <div className='w-full h-full flex flex-col items-center'>
+    <div className='w-full h-full flex flex-col items-center relative'>
       <div className="foto w-[200px] h-[200px] bg-white/90 rounded-full m-auto mt-[100px] p-1">
         <img className='object-cover object-center w-full h-full rounded-full' src={user.photo} alt="" />
       </div>
@@ -35,6 +31,9 @@ export const PerfilPage = ({children,renderChildren}) => {
           <button onClick={()=> setPage("info")}>
             <p>Informacion</p>
           </button>
+          <button onClick={()=> setPage("post")}>
+            <p>Publicacion</p>
+          </button>
         </div>
 
         <div className="info  bg-black py-[50px] px-[100px]">
@@ -43,7 +42,7 @@ export const PerfilPage = ({children,renderChildren}) => {
             }
         </div>
     </div>
-
+ 
     </div > 
   )
 }

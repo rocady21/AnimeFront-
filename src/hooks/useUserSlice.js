@@ -21,7 +21,6 @@ export const useUserSlice = () => {
             // guardar token en localStorage
             localStorage.setItem("token",data.token)
             localStorage.setItem("token-init-date",new Date().getTime())
-            console.log(data)
             //guardar en el sotre
             if(data.ok === true) {
                 Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data.photo}))
@@ -59,7 +58,6 @@ export const useUserSlice = () => {
         try {            
             const {data} = await animeApi.get("auth/validarUserInfoByToken");
             if (data.ok) {
-                console.log(data.doc)
                 Dispatch(onLogin(data?.userInfo))
             } else {
                 Dispatch(onLogout());

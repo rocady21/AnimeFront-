@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 export const SearchPage = () => {
 
     const {resultsSearch,LoadAnimes} = useAnimeSlice()
-    console.log(resultsSearch)
     useEffect(() => {
         LoadAnimes()
     }, []);

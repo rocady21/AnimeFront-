@@ -9,13 +9,10 @@ export const useAnimeSlice = () => {
     const { animes, isLoading, results, resultsSearch, infoCapPage, resultsComentarios } = useSelector((state) => state.anime)
 
     const newAnime = async ({ name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis }) => {
-        console.log("aqui si entro")
         try {
             //peticion post a la base de datos
             const resp = await animeApi.post("/anime/new", { name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis })
-            console.log(resp)
         } catch (error) {
-            console.log(error)
         }
     }
     const LoadAnimes = async () => {
@@ -36,7 +33,6 @@ export const useAnimeSlice = () => {
         try {
             const { data } = await animeApi.post("/anime/getAnimebyId", { uid })
             dispach(onFilterAnimeById(data.anime))
-            console.log(data)
         } catch (error) {
 
         }
@@ -74,10 +70,8 @@ export const useAnimeSlice = () => {
         })
         if (filterCap) {
             dispach(onGetCapByNumPage(filterCap))
-            console.log("existe")
         } else {
             dispach(onClearGetCapByNumPage())
-            console.log("no existe")
         }
     }
 

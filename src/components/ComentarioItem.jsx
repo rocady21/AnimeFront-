@@ -4,7 +4,6 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export const ComentarioItem = ({comentario}) => {
-  console.log(comentario.comentario)
   return (
     <div className='text-white w-full flex flex-row h-[150px] mb-[50px] justify-between '>
       <div className="foto w-[15%] self-start ">

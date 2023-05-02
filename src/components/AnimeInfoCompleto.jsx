@@ -17,8 +17,7 @@ export const AnimeInfoCompleto = () => {
   const { filterAnimeById, results,resultsSearch,filterAnimeCap } = useAnimeSlice();
   const [search, setsearch] = useState("");
   const {Capitulos} = results;
-  console.log(params)
-  console.log("Xd")
+
 
   const guardarValorSearch =(e)=> {
     setsearch(e.target.value)

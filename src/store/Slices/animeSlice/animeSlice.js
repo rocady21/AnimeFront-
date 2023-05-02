@@ -21,13 +21,10 @@ export const animeSlice = createSlice({
       state.animes = [...state.animes, payload]
     },
     onFilterAnimeById: (state, { payload }) => {
-      console.log(payload)
-      console.log("payload")
       state.results = payload;
     },
     onFilterAnimeByCap: (state, { payload }) => {
       state.resultsSearch = payload
-      console.log(state.resultsSearch)
     },
     onClearResultsSearch: (state, { payload }) => {
       state.resultsSearch = []

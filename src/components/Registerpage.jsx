@@ -25,7 +25,6 @@ export const Registerpage = () => {
       setpreviewImage(undefined)
       return
     }
-    console.log("coso")
 
     const imgUrl = URL.createObjectURL(selectedFile)
     setpreviewImage(imgUrl)
