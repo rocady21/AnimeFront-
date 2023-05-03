@@ -28,9 +28,9 @@ export const LoginRouter = () => {
         (status === "not-authenticated")?
         (
           <>
-          <Route path='login' element={ <LoginPage/> } />
+          <Route path='/login' element={ <LoginPage/> } />
           <Route path='/*' element={ <LoginPage/> } />
-          <Route path='register' element={ <Registerpage/> } />
+          <Route path='/register' element={ <Registerpage/> } />
           </>
 
         ): 
