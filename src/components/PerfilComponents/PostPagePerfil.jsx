@@ -23,8 +23,7 @@ export const PostPagePerfil = () => {
     LoadPostersUser({ id_user: user._id })
   }, []);
 
-  console.log(post)
-
+  console.log("xddddddddddddddddd")
   const openModal = () => {
     setstateModal(true)
   }
@@ -44,9 +43,10 @@ export const PostPagePerfil = () => {
 
   return (
     <div className='w-full h- flex flex-col '>
-      <div className='grid grid-cols-3   '>
         {
-          post[0] ?
+          post?
+          <div className='grid grid-cols-3'>
+            {
             post.map((post) => {
               return <div key={post._id} className='h-[250px] bg-white m-5 bg-color hover:opacity-[0.5]  relative flex flex-col items-center cursor-pointer ' onClick={NavigatePostInfo} onMouseEnter={MostrarLikes} onMouseLeave={NoMostrarLikes}>
                 <img className='w-full h-full object-cover object-center ' src={post.foto} alt="" />
@@ -63,11 +63,12 @@ export const PostPagePerfil = () => {
                   </div>
                 }
               </div>
-            }) :
+            }) 
+            }
+          </div>:
             <p className='text-center my-[20px]'>No hay publicaciones...</p>
 
         }
-      </div>
       <button className='bg-amber-600 px-[40px] py-[10px] text-white rounded-[50px] mb-[10px] w-[200px] self-center mt-[50px]' onClick={openModal}>Añadir Post</button>
       {
         stateModal === true && <ModalNewPost close={(value) => closeModal(value)} />

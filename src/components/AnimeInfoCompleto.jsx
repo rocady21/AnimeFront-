@@ -9,12 +9,14 @@ import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import { AnimeCapCard } from "./AnimeCapCard";
 import { VerCapAnime } from "./VerCapAnime";
 import { VerCapAnimeisLoading } from "./VerCapAnimeisLoading";
+import { useUserSlice } from "../hooks/useUserSlice";
 
 
 export const AnimeInfoCompleto = () => {
   const params = useParams();
   const { idAnime } = params;
   const { filterAnimeById, results,resultsSearch,filterAnimeCap } = useAnimeSlice();
+  const {addFavoriteAnime,user} = useUserSlice()
   const [search, setsearch] = useState("");
   const {Capitulos} = results;
 
@@ -32,7 +34,10 @@ export const AnimeInfoCompleto = () => {
   const [params1] = useSearchParams()
   const idCap = params1.get("idCap");
 
-  // funcion que filtre anime segun nombre
+  
+  const AddFavorite = ()=> {
+    addFavoriteAnime({id_user:user._id,idAnime:idAnime})
+  }
 
   return (
 
@@ -58,7 +63,7 @@ export const AnimeInfoCompleto = () => {
                 </div>
                 <div className="favortios w-full  flex flex-row items-center p-[5px]  bg-white rounded-[10px]">
                   <FavoriteIcon sx={{ fontSize: 50, color: "red" }} />
-                  <button className="flex flex-col hover:text-red-400 ml-[20px]">
+                  <button className="flex flex-col hover:text-red-400 ml-[20px]" onClick={AddFavorite}>
                     <p className="text-[20px] ">AGREGAR</p>
                     <p>a favoritos</p>
                   </button>

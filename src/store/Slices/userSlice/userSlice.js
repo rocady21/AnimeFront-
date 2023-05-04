@@ -7,7 +7,8 @@ export const userSlice = createSlice({
   initialState:{
     status:"not-authenticated",
     user: {},
-    messageError: ""
+    messageError: "",
+    resultsAnimesFav:[]
   },
   reducers: {
     onChecking: (state)=> {
@@ -32,10 +33,13 @@ export const userSlice = createSlice({
       state.status="not-authenticated";
       state.user = {};
       state.messageError = payload
+    },
+    onLoadAnimesFav:(state,{payload})=> {
+      state.resultsAnimesFav= payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onChecking,onLogin,onLogout,CLearMessageError,onErrorLogin } = userSlice.actions
+export const { onChecking,onLogin,onLogout,CLearMessageError,onErrorLogin,onLoadAnimesFav } = userSlice.actions
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import animeApi from "../AxiosConection/animeApi"
-import { CLearMessageError, onErrorLogin, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
+import { CLearMessageError, onErrorLogin, onLoadAnimesFav, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
 
 
 
@@ -9,7 +9,7 @@ export const useUserSlice = () => {
 
     const Dispatch = useDispatch()
     const navigate = useNavigate()
-    const {state,user,messageError} = useSelector((state) => state.user)
+    const {state,user,messageError,resultsAnimesFav} = useSelector((state) => state.user)
 
     
     const startLogin = async({email,password})=> {
@@ -75,12 +75,46 @@ export const useUserSlice = () => {
         navigate("/login")
 
     } 
+
+    const addFavoriteAnime = async({id_user,idAnime})=> {
+        const Data = {
+            id_Anime:idAnime,
+            fechaAgregado:new Date(),
+            comentario:""
+        }
+        try {
+            const {data} = await animeApi.post("/auth/addAnimeFav",{id_user,Data})
+            console.log(data)
+            
+        } catch (error) {
+            console.log(error)
+            console.log("error al añadir el anime")
+        }
+        // peticion post que añada un anime favorito al usuario 
+    }
+
+    const listAnimeFavorite = async({id_User})=> {
+        // lista de usuarios favoritos del usuario 
+        try {
+            const {data} = await animeApi.post("/auth/listAnimeFav",{id_User})
+            if(data) {
+                Dispatch(onLoadAnimesFav(data.AnimesFav))
+            }
+            
+        } catch (error) {
+            console.log(error)
+            console.log("error al cargar los animes Favoritos")
+        }
+    }
     return {
         user,
         startLogin,
         CheckAuthToken,
         startLogout,
         RegisterUsuario,
-        messageError
+        messageError,
+        addFavoriteAnime,
+        listAnimeFavorite,
+        resultsAnimesFav
   }
 }
