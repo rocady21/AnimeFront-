@@ -10,8 +10,8 @@ export const NavBar = () => {
   const { startLogout } = useUserSlice()
   const [valueSearch, setvalueSearch] = useState("");
   const navigate = useNavigate()
-  const {searchAnime} = useAnimeSlice()
-  const onChangeValueSearch = (e)=> {
+  const { searchAnime } = useAnimeSlice()
+  const onChangeValueSearch = (e) => {
     setvalueSearch(e.target.value)
   }
   const { user } = useUserSlice();
@@ -48,6 +48,9 @@ export const NavBar = () => {
       </div>
 
       <div className="flex flex-row items-center px-[50px] ">
+        <button className='w-[50px] h-[50px]'>
+          <img className='object-cover object-center' src="../icons/friendRequest.png" alt="" />
+        </button>
         <NavLink className={"flex flex-row items-center"} to={"/perfil"}>
           <img className="w-[50px] h-[50px] bg-white mr-[15px] object-cover object-center rounded-full" src={photo || undefined} alt="" />
           <p className="mr-[30px]">Perfil</p>
