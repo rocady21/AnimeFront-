@@ -9,21 +9,21 @@ export const useUserSlice = () => {
 
     const Dispatch = useDispatch()
     const navigate = useNavigate()
-    const {state,user,messageError,resultsAnimesFav} = useSelector((state) => state.user)
+    const { state, user, messageError, resultsAnimesFav } = useSelector((state) => state.user)
 
-    
-    const startLogin = async({email,password})=> {
+
+    const startLogin = async ({ email, password }) => {
         // mandar a disparar onChecking
         try {
             // login a bd
             // peticion a base de datos
-            const {data} = await animeApi.post("/auth/login",{email,password});
+            const { data } = await animeApi.post("/auth/login", { email, password });
             // guardar token en localStorage
-            localStorage.setItem("token",data.token)
-            localStorage.setItem("token-init-date",new Date().getTime())
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("token-init-date", new Date().getTime())
             //guardar en el sotre
-            if(data.ok === true) {
-                Dispatch(onLogin({name:data.name,id:data.uid,rol:data.rol,photo:data.photo}))
+            if (data.ok === true) {
+                Dispatch(onLogin({ name: data.name, id: data.uid, rol: data.rol, photo: data.photo }))
             }
 
         } catch (error) {
@@ -32,15 +32,15 @@ export const useUserSlice = () => {
         }
     }
 
-    const RegisterUsuario = async({photo,name,email,password})=> {
+    const RegisterUsuario = async ({ photo, name, email, password }) => {
 
         try {
             // peticion a bdd
             const rol = "user"
-            const resp = await animeApi.post("/auth/new",{photo,name,email,password,rol});
+            const resp = await animeApi.post("/auth/new", { photo, name, email, password, rol });
             // guardar token en localStorage
-            localStorage.setItem("token",resp.token)
-            localStorage.setItem("token-init-date",new Date().getTime())
+            localStorage.setItem("token", resp.token)
+            localStorage.setItem("token-init-date", new Date().getTime())
         } catch (error) {
             Dispatch(onLogout(error.response.data?.msg))
             setTimeout(() => {
@@ -49,14 +49,14 @@ export const useUserSlice = () => {
         }
     }
 
-    
-    const CheckAuthToken = async ()=> {
+
+    const CheckAuthToken = async () => {
         const token = localStorage.getItem("token")
-        if(!token) {
+        if (!token) {
             Dispatch(onLogout());
         }
-        try {            
-            const {data} = await animeApi.get("auth/validarUserInfoByToken");
+        try {
+            const { data } = await animeApi.get("auth/validarUserInfoByToken");
             if (data.ok) {
                 Dispatch(onLogin(data?.userInfo))
             } else {
@@ -69,23 +69,23 @@ export const useUserSlice = () => {
     }
 
 
-    const startLogout = ()=> {
+    const startLogout = () => {
         localStorage.clear()
         Dispatch(onLogout())
         navigate("/login")
 
-    } 
+    }
 
-    const addFavoriteAnime = async({id_user,idAnime})=> {
+    const addFavoriteAnime = async ({ id_user, idAnime }) => {
         const Data = {
-            id_Anime:idAnime,
-            fechaAgregado:new Date(),
-            comentario:""
+            id_Anime: idAnime,
+            fechaAgregado: new Date(),
+            comentario: ""
         }
         try {
-            const {data} = await animeApi.post("/auth/addAnimeFav",{id_user,Data})
+            const { data } = await animeApi.post("/auth/addAnimeFav", { id_user, Data })
             console.log(data)
-            
+
         } catch (error) {
             console.log(error)
             console.log("error al añadir el anime")
@@ -93,18 +93,21 @@ export const useUserSlice = () => {
         // peticion post que añada un anime favorito al usuario 
     }
 
-    const listAnimeFavorite = async({id_User})=> {
+    const listAnimeFavorite = async ({ id_User }) => {
         // lista de usuarios favoritos del usuario 
         try {
-            const {data} = await animeApi.post("/auth/listAnimeFav",{id_User})
-            if(data) {
+            const { data } = await animeApi.post("/auth/listAnimeFav", { id_User })
+            if (data) {
                 Dispatch(onLoadAnimesFav(data.AnimesFav))
             }
-            
+
         } catch (error) {
             console.log(error)
             console.log("error al cargar los animes Favoritos")
         }
+    }
+    const LimpiarMessageError = () => {
+        Dispatch(CLearMessageError())
     }
     return {
         user,
@@ -115,6 +118,7 @@ export const useUserSlice = () => {
         messageError,
         addFavoriteAnime,
         listAnimeFavorite,
-        resultsAnimesFav
-  }
+        resultsAnimesFav,
+        LimpiarMessageError
+    }
 }

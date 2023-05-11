@@ -16,9 +16,7 @@ export const friendSlice = createSlice({
                 state.isLoading = false
         },
         onLoadFriendRequest: (state, { payload }) => {
-            state.friendRequest = payload,
-                state.friends = [],
-                state.isLoading = false
+            state.friendRequest = payload
         },
         onAcceptFriendRequest: (state, { payload }) => {
             state.friendRequest = payload,
@@ -30,10 +28,14 @@ export const friendSlice = createSlice({
                 state.friends = [],
                 state.isLoading = false
         },
+        onClearRequestFriend: (state, { payload }) => {
+            state.friendRequest = []
+
+        },
 
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest } = friendSlice.actions
+export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend } = friendSlice.actions

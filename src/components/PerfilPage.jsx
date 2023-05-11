@@ -13,7 +13,7 @@ export const PerfilPage = ({ children, renderChildren }) => {
   const { user } = useUserSlice()
   const [page, setPage] = useState("post")
   return (
-    <div className='w-full h-full flex flex-col items-center relative'>
+    <div className='w-full h-full flex flex-col items-center relative z-1'>
       <div className="foto w-[200px] h-[200px] bg-white/90 rounded-full m-auto mt-[50px] p-1">
         <img className='object-cover object-center w-full h-full rounded-full' src={user.photo} alt="" />
       </div>

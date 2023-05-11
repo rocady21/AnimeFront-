@@ -18,25 +18,23 @@ import { PostPageNav } from '../components/PostPageNav'
 
 
 export const AppRouter = () => {
-  
-  const {pathname} = useLocation()
 
-  const coso = pathname === PerfilRoutes.post() || pathname === PerfilRoutes.info() || pathname === PerfilRoutes.AnimesFav() 
+  const { pathname } = useLocation()
 
   return (
     <div className='h-full w-full'>
-    <NavBar/>
-        <Routes>
-          <Route path='/*' element = {<AnimePage/>}/>
-          <Route path='/inicio' element = {<InicioPage/>}/>
-          <Route path='/anime' element = {<AnimePage/>}/>
-          <Route path='/mangas' element = {<MangaPage/>}/>
-          <Route path='/perfil' element = {<PerfilPage/>}/>
-          <Route path='/post' element = {<PostPageNav/>}/>
-          <Route path='/animes/:idAnime' element = {<AnimeInfoCompleto/>}/>
-          <Route path='/searchPage' element = {<SearchPage/>}/>
-          
-        </Routes>    
+      <NavBar />
+      <Routes>
+        <Route path='/*' element={<AnimePage />} />
+        <Route path='/inicio' element={<InicioPage />} />
+        <Route path='/anime' element={<AnimePage />} />
+        <Route path='/mangas' element={<MangaPage />} />
+        <Route path='/perfil' element={<PerfilPage />} />
+        <Route path='/post' element={<PostPageNav />} />
+        <Route path='/animes/:idAnime' element={<AnimeInfoCompleto />} />
+        <Route path='/searchPage' element={<SearchPage />} />
+
+      </Routes>
     </div>
   )
 }
