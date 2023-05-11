@@ -23,10 +23,10 @@ export const FriendRequestCard = ({ requestInfo }) => {
                 <p className='self-center ml-[20px]'>{requestInfo.name}</p>
             </div>
             <div className="buttons w-2/6 flex flex-row justify-between self-center">
-                <button onClick={AceptarSolicitud} className='w-[60px] h-[40px]   flex justify-center'>
+                <button onClick={RechazarSolicitud} className='w-[60px] h-[40px]   flex justify-center'>
                     <img className='w-[30px] h-[30px] self-center ' src="../icons/cancelar.png" alt="" />
                 </button>
-                <button onClick={RechazarSolicitud} className='w-[60px] h-[40px]  flex justify-center '>
+                <button onClick={AceptarSolicitud} className='w-[60px] h-[40px]  flex justify-center '>
                     <img className='w-[30px] h-[30px] self-center' src="../icons/accept.png" alt="" />
                 </button>
             </div>

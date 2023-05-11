@@ -20,17 +20,16 @@ export const NavBar = () => {
   const { photo } = user
   const [notification, setnotification] = useState(true);
   const [stateModal, setstateModal] = useState(false)
-  const { LoadFriendsRequest, friendRequest } = useFriendRequest()
+  const { LoadFriendsRequest, friendRequest,SearchPeople } = useFriendRequest()
 
-  useEffect(() => {
-    LoadFriendsRequest({ id_user: user._id })
-  }, []);
+
 
 
   const buscarAnime = (e) => {
     e.preventDefault()
     navigate("/searchPage")
     searchAnime(valueSearch)
+    SearchPeople(valueSearch)
     setvalueSearch("")
   }
   const closeModal = (value) => {
@@ -53,7 +52,7 @@ export const NavBar = () => {
         <form className="" onSubmit={buscarAnime}>
           <input
             type="search"
-            className=" w-[250px] pl-[30px] py-[10px] rounded-full bg-[#000000]/40 focus:bg-[#000000]/80 focus:outline-none  border border-[1px] border-none"
+            className=" w-[250px]  px-[30px] py-[10px] rounded-full bg-slate-800/50 focus:bg-slate-800 focus:outline-none  border border-[1px] border-none"
             placeholder="Buscar Anime... "
             name=""
             id=""

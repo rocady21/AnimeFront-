@@ -14,6 +14,7 @@ import PerfilRoutes from '../helpers/PerfilRoutes'
 import { InfoUser } from '../components/PerfilComponents/informacionUser'
 import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
 import { PostPageNav } from '../components/PostPageNav'
+import { ProfilePeople } from '../components/ProfilePeople'
 
 
 
@@ -33,6 +34,8 @@ export const AppRouter = () => {
         <Route path='/post' element={<PostPageNav />} />
         <Route path='/animes/:idAnime' element={<AnimeInfoCompleto />} />
         <Route path='/searchPage' element={<SearchPage />} />
+        <Route path='/perfil/:id_people' element={<ProfilePeople />} />
+
 
       </Routes>
     </div>
