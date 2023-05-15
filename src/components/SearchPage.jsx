@@ -8,10 +8,8 @@ import { PeopleCard } from './miniComponents/PeopleCard'
 export const SearchPage = () => {
 
     const { resultsSearch, LoadAnimes } = useAnimeSlice()
-    const {peoples} = useFriendRequest()
-    useEffect(() => {
-        LoadAnimes()
-    }, []);
+    const { peoples } = useFriendRequest()
+
 
     console.log(peoples)
 
@@ -34,17 +32,17 @@ export const SearchPage = () => {
             }
             <div className='w-full h-[1px] bg-amber-600 my-[50px] opacity-[0.5]'></div>
             <div className=' '>
-            <p className='text-center my-[25px] text-white text-[20px]'>Resultado de la Busqueda de Personas:</p>
+                <p className='text-center my-[25px] text-white text-[20px]'>Resultado de la Busqueda de Personas:</p>
                 {
                     /*Cargar personas en base al resultado de la busqueda */
-                    <div className='w-full flex flex-row justify-center'>
+                    <div className='w-full flex flex-row justify-center <'>
                         {
-                            (peoples[0])? peoples.map((people)=> {
-                                return  <PeopleCard infoPeople={people} key={people._id} />
+                            (peoples[0]) ? peoples.map((people) => {
+                                return <PeopleCard infoPeople={people} key={people._id} />
                             })
-                            : <p className='text-white text-center'>No hay personas con ese nombre</p>
+                                : <p className='text-white text-center'>No hay personas con ese nombre</p>
                         }
-                        
+
                     </div>
 
                 }

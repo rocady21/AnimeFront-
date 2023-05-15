@@ -16,3 +16,23 @@ body {
     filter: invert(97%) sepia(6%) saturate(516%) hue-rotate(123deg) brightness(111%) contrast(89%);
 }
 
+.content::before {
+  position: absolute;
+  content: '';
+  bottom: 100%;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 55px 0 0 400px;
+  border-color: transparent transparent transparent #141414;
+}
+
+.content {
+  width: 100%;
+  background-color: #141414;
+  position: relative;
+}
+
+
+
