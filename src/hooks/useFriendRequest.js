@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById } from "../store/Slices/friendSlice/friendSlice"
+import { onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById, onAddNewFriendRequestRealTime } from "../store/Slices/friendSlice/friendSlice"
 import animeApi from "../AxiosConection/animeApi"
 
 
 export const useFriendRequest = () => {
 
-    const { friend, friendRequest, solicitudState,peoples,resultsPeople } = useSelector((state) => state.friend)
+
+    const { friend, friendRequest, solicitudState, peoples, resultsPeople } = useSelector((state) => state.friend)
     const dispach = useDispatch()
 
-    const AddFriend = async({ id_me, id_friend }) => {
+    const AddFriend = async ({ id_me, id_friend }) => {
         try {
-            const {data} = await animeApi.put("/auth/newFriend",{id_me,id_friend})
+            const { data } = await animeApi.put("/auth/newFriend", { id_me, id_friend })
             dispach(onStateFriendRequest("send"))
         } catch (error) {
             console.log(error)
@@ -70,29 +71,29 @@ export const useFriendRequest = () => {
     }
 
 
-    const SearchPeople = async(valueSearch)=> {
+    const SearchPeople = async (valueSearch) => {
         try {
-            if(valueSearch) {
+            if (valueSearch) {
                 //peticion a base de datos de todos los usuarios
-                const {data} = await animeApi.get("/auth/listU")
+                const { data } = await animeApi.get("/auth/listU")
 
-                if(data.usuarios) {
-                    dispach(onSearchPeople({usuarios:data.usuarios,valueSearch:valueSearch}))
+                if (data.usuarios) {
+                    dispach(onSearchPeople({ usuarios: data.usuarios, valueSearch: valueSearch }))
                 }
             }
         } catch (error) {
-            
+
         }
 
 
     }
 
-    const loadInfoUser = async({id_user})=> {
+    const loadInfoUser = async ({ id_user }) => {
         try {
             console.log("Hola :D")
-            const {data} = await animeApi.post("/auth/getUserById",{id_user})
+            const { data } = await animeApi.post("/auth/getUserById", { id_user })
 
-            if(data.ok === true) {
+            if (data.ok === true) {
                 dispach(onloadUserById(data.userInfo[0]))
             } else {
                 console.log("error")
@@ -101,7 +102,26 @@ export const useFriendRequest = () => {
             console.log(error)
         }
     }
-    
+
+    const LoadFriendRequestRealTime = async (id_user) => {
+        console.log("lleo al load")
+        console.log(id_user)
+        try {
+            const { data } = await animeApi.post("/auth/getUserById", { id_user })
+            if (data) {
+                const friendRequestInfo = {
+                    _id: data._id,
+                    photo: data.photo,
+                    name: data.name
+                }
+                dispach(onAddNewFriendRequestRealTime(friendRequestInfo))
+            }
+
+        } catch (error) {
+
+        }
+    }
+
 
     return {
         friend,
@@ -115,7 +135,8 @@ export const useFriendRequest = () => {
         LoadFriendsRequest,
         DeclineFriendRequest,
         SearchPeople,
-        loadInfoUser
+        loadInfoUser,
+        LoadFriendRequestRealTime
 
     }
 }

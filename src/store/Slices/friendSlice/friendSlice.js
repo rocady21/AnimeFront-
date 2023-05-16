@@ -7,10 +7,10 @@ export const friendSlice = createSlice({
     name: 'friendSlice',
     initialState: {
         friendRequest: [],
-        peoples:[],
+        peoples: [],
         friends: [],
         solicitudState: "no-send",
-        resultsPeople:{}
+        resultsPeople: {}
     },
     reducers: {
         onLoadFriend: (state, { payload }) => {
@@ -36,25 +36,28 @@ export const friendSlice = createSlice({
 
         },
         onSearchPeople: (state, { payload }) => {
-            const {usuarios,valueSearch} = payload
-            const valueLowerCase = valueSearch.toLowerCase()            
-            const filtradoUsuariosByValue = usuarios.filter((userPeople)=> {
-                return userPeople.name.toLowerCase().includes(valueLowerCase) 
+            const { usuarios, valueSearch } = payload
+            const valueLowerCase = valueSearch.toLowerCase()
+            const filtradoUsuariosByValue = usuarios.filter((userPeople) => {
+                return userPeople.name.toLowerCase().includes(valueLowerCase)
             })
 
-            if(filtradoUsuariosByValue) {
+            if (filtradoUsuariosByValue) {
                 state.peoples = filtradoUsuariosByValue
             }
         },
-        onStateFriendRequest: (state,{payload})=> {
+        onStateFriendRequest: (state, { payload }) => {
             state.solicitudState = payload
         },
-        onloadUserById: (state,{payload})=> {
+        onloadUserById: (state, { payload }) => {
             state.resultsPeople = payload
+        },
+        onAddNewFriendRequestRealTime: (state, { payload }) => {
+            state.friendRequest = [...state.friendRequest, payload]
         }
-        
+
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend ,onSearchPeople,onStateFriendRequest,onloadUserById} = friendSlice.actions
+export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onAddNewFriendRequestRealTime, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById } = friendSlice.actions

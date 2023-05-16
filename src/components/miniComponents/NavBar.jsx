@@ -6,7 +6,7 @@ import { useAnimeSlice } from '../../hooks/useAnimeSlice'
 import { ModalFriendRequest } from '../Modals/ModalFriendRequest'
 import { useEffect } from 'react'
 import { useFriendRequest } from '../../hooks/useFriendRequest'
-import { subscribe } from '../../hooks/pusher'
+import { formatChannelNotification, subscribe } from '../../hooks/pusher'
 
 export const NavBar = () => {
 
@@ -21,12 +21,17 @@ export const NavBar = () => {
   const { photo } = user
   const [notification, setnotification] = useState(true);
   const [stateModal, setstateModal] = useState(false)
-  const { LoadFriendsRequest, friendRequest,SearchPeople } = useFriendRequest()
+  const { LoadFriendsRequest, friendRequest, SearchPeople } = useFriendRequest()
 
+  const Suscribe = () => {
+    const channel = formatChannelNotification({ user_id: user._id })
+    subscribe(channel)
+  }
 
   useEffect(() => {
-  },[]);
-  
+    Suscribe()
+  }, []);
+
   const buscarAnime = (e) => {
     e.preventDefault()
     navigate("/searchPage")
@@ -42,10 +47,6 @@ export const NavBar = () => {
   }
 
 
-  const LoadNotificationRealTime = (user_id)=> {
-    const data = subscribe(`friendRequest-${user_id}`)
-  }
-  
   return (
     <div className='w-full h-[80px] bg-black flex items-center justify-between text-white relative'>
       <div className='flex flex-row w-[50%] justify-around text-[20px]'>
