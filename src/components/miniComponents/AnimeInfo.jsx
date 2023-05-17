@@ -7,7 +7,7 @@ export const AnimeInfo = ({ anime, status }) => {
         navigate(`/animes/${anime._id}`)
     }
     return (
-    <div className="ml-[200px] infoAnime w-[400px] h-[400px] bg-black absolute rounded-[30px] z-01">
+    <div className="ml-[200px] infoAnime w-[400px] h-[400px] bg-black absolute rounded-[30px] z-10">
         <div className="p-[20px] flex flex-col justify-around w-full h-full">
             <div className="flex flex-row h-[5%] justify-around text-white ">
             <h1 className=" mb-[10px]">{anime.name}</h1>

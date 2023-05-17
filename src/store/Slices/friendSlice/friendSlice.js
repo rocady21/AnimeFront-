@@ -53,6 +53,8 @@ export const friendSlice = createSlice({
             state.resultsPeople = payload
         },
         onAddNewFriendRequestRealTime: (state, { payload }) => {
+            console.log("esta es la info del usuario que se añade")
+            console.log(payload)
             state.friendRequest = [...state.friendRequest, payload]
         }
 

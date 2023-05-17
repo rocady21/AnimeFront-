@@ -12,7 +12,6 @@ export const ProfilePeople = () => {
         loadInfoUser({ id_user: id_people })
     }, []);
 
-    console.log(resultsPeople)
 
     return (
         <div className='w-full h-full relative flex flex-col justify-center'>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useUserSlice } from '../../hooks/useUserSlice'
 import { useAnimeSlice } from '../../hooks/useAnimeSlice'
@@ -7,9 +6,18 @@ import { ModalFriendRequest } from '../Modals/ModalFriendRequest'
 import { useEffect } from 'react'
 import { useFriendRequest } from '../../hooks/useFriendRequest'
 import { formatChannelNotification, subscribe } from '../../hooks/pusher'
+import {AiFillCaretDown} from "react-icons/ai";
+import {AiFillCaretUp} from "react-icons/ai";
+import {FaUserFriends} from "react-icons/fa";
+import { FriendStatus } from './friendStatus'
+import 'animate.css'
 
+
+
+let isSuscribe = false
 export const NavBar = () => {
 
+  const [friensdOnline, setfriensdOnline] = useState(false);
   const { startLogout } = useUserSlice()
   const [valueSearch, setvalueSearch] = useState("");
   const navigate = useNavigate()
@@ -21,15 +29,25 @@ export const NavBar = () => {
   const { photo } = user
   const [notification, setnotification] = useState(true);
   const [stateModal, setstateModal] = useState(false)
-  const { LoadFriendsRequest, friendRequest, SearchPeople } = useFriendRequest()
+  const { LoadFriendsRequest, friendRequest, SearchPeople,LoadFriendRequestRealTime,LoadFriends,friends } = useFriendRequest()
 
+  
+
+
+  const handleAddNotification = (id_user)=> {
+    LoadFriendRequestRealTime(id_user)
+  }
   const Suscribe = () => {
     const channel = formatChannelNotification({ user_id: user._id })
-    subscribe(channel)
+    subscribe(channel,handleAddNotification);
   }
 
   useEffect(() => {
-    Suscribe()
+    if(isSuscribe === false) {
+      Suscribe();
+      isSuscribe = true;
+    }
+    LoadFriends({id_user:user._id})
   }, []);
 
   const buscarAnime = (e) => {
@@ -46,8 +64,13 @@ export const NavBar = () => {
     setstateModal(true)
   }
 
+  const openCloseFriensOnline = ()=> {
+    setfriensdOnline(!friensdOnline)
+  }
+  
 
   return (
+    <div className='flex h-full flex-col relative'>
     <div className='w-full h-[80px] bg-black flex items-center justify-between text-white relative'>
       <div className='flex flex-row w-[50%] justify-around text-[20px]'>
         <h1 className='text-[25px]'>AnimeCOU</h1>
@@ -86,6 +109,30 @@ export const NavBar = () => {
       </div>
       {
         stateModal === true && <ModalFriendRequest closeModal={(value) => closeModal(value)} friendRequest={friendRequest} />
+      }
+    </div>
+      <button className='w-[40px] h-[40px] bg-black absolute  top-[80px] flex flex-col justify-center text-white ' onClick={openCloseFriensOnline}>
+        
+        <div className='text-[25px] self-center'> <FaUserFriends/> </div>
+        
+        {
+          friensdOnline === false? <div className='text-[15px] self-center'> <AiFillCaretDown/> </div> : 
+          <div className='text-[15px] self-center'> <AiFillCaretUp/> </div>
+
+        }
+
+      </button>
+
+      {
+        friensdOnline === true && <div className='w-[40px] h-full bg-slate-600 absolute top-[120px] flex flex-col justify-cener py-[10px] animate__animated animate__backInDown +'>
+          {
+            friends[0]?
+            friends.map((friend)=> {
+                return <FriendStatus infoFriend = {friend} key={friend._id} />
+            }) : 
+            <p>...</p>
+          }
+        </div>
       }
     </div>
   )

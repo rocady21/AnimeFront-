@@ -20,11 +20,14 @@ export const formatChannelNotification = ({ user_id }) => {
 }
 
 //subscribe the channel to bind events of channel
-export const subscribe = (channelName) => {
+export const subscribe = (channelName,handleAddNotification) => {
+
   const channel = pusher.subscribe(channelName);
 
   const data = channel.bind('addNotification', function (data) {
-    console.log(data.message)
+    if(data) {
+      handleAddNotification(data.message.id_User)
+    }
   });
 
   return data

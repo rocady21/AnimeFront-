@@ -49,8 +49,8 @@ export const AnimeInfoCompleto = () => {
           <div className="portada w-full flex flex-row bg-black h-[300px] absolute ">
             <p className="text-white self-end ml-[30%] mb-[10px] italic text-[40px]  ">One Piece</p>
             <div className="info  w-[300px] h-[750px] mt-[100px] ml-[10%] flex flex-col items-center absolute ">
-              <div className="foto w-full h-full bg-white p-[7px] rounded-[20px]">
-                <img className="rounded-[20px]" src={results.Portada} alt="" />
+              <div className="foto w-full h-[800px] bg-white p-[7px] rounded-[20px]">
+                <img className="rounded-[20px] h-full" src={results.Portada} alt="" />
               </div>
               <div className="h-full w-full flex flex-col mt-[20px] justify-around">
                 <div className="emision w-full bg-green-600 text-center flex flex-row items-center rounded-[10px] justify-items-stretch p-[15px]  ">

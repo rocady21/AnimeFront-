@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById, onAddNewFriendRequestRealTime } from "../store/Slices/friendSlice/friendSlice"
+import { onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById, onAddNewFriendRequestRealTime, onLoadFriend } from "../store/Slices/friendSlice/friendSlice"
 import animeApi from "../AxiosConection/animeApi"
 
 
 export const useFriendRequest = () => {
 
 
-    const { friend, friendRequest, solicitudState, peoples, resultsPeople } = useSelector((state) => state.friend)
+    const { friends, friendRequest, solicitudState, peoples, resultsPeople } = useSelector((state) => state.friend)
     const dispach = useDispatch()
 
     const AddFriend = async ({ id_me, id_friend }) => {
@@ -18,8 +18,17 @@ export const useFriendRequest = () => {
         }
     }
 
-    const LoadFriends = ({ id_user }) => {
-
+    const LoadFriends = async({ id_user }) => {
+        try {
+            if(id_user) {
+                const {data} = await animeApi.post("/auth/litFriends",{id_user})
+                if(data.ok === true) {
+                    dispach(onLoadFriend(data.listFriends))
+                }
+            }
+        } catch (error) {
+            
+        }
     }
 
     const LoadFriendsRequest = async ({ id_user }) => {
@@ -104,15 +113,16 @@ export const useFriendRequest = () => {
     }
 
     const LoadFriendRequestRealTime = async (id_user) => {
-        console.log("lleo al load")
-        console.log(id_user)
         try {
             const { data } = await animeApi.post("/auth/getUserById", { id_user })
             if (data) {
+                console.log(data)
+                const {userInfo} = data
+                console.log(userInfo)
                 const friendRequestInfo = {
-                    _id: data._id,
-                    photo: data.photo,
-                    name: data.name
+                    _id: userInfo._id,
+                    photo: userInfo.photo,
+                    name: userInfo.name
                 }
                 dispach(onAddNewFriendRequestRealTime(friendRequestInfo))
             }
@@ -124,7 +134,7 @@ export const useFriendRequest = () => {
 
 
     return {
-        friend,
+        friends,
         friendRequest,
         solicitudState,
         peoples,
