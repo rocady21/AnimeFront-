@@ -7,6 +7,7 @@ import { GenerosDropdown } from "../miniComponents/Generos";
 import { useEffect } from "react";
 import { AnimeCapInserts } from "./AnimeCapInserts";
 import { fileupload } from "../../helpers/uploadFile";
+import { TipoAnimeDropDown } from "../miniComponents/TipoDropDown";
 
 
 const animeForm = {
@@ -16,14 +17,15 @@ const animeForm = {
   FechaFinalizacion: new Date(),
   Generos: [],
   sinopsis: "",
+  tipo: ""
 };
 export const CrearAnime = () => {
   const [fechaEmision, setfechaEmision] = useState(new Date());
   const [FechaFinalizacion, setFechaFinalizacion] = useState(new Date());
   const [capitulos, setcapitulos] = useState([]);
-  const { name, Portada, Generos, sinopsis, oninputChange, setKey,onResetForm } =
+  const { name, Portada, Generos, sinopsis, Tipo, setKey, onResetForm } =
     useForm(animeForm);
-    const { newAnime } = useAnimeSlice();
+  const { newAnime } = useAnimeSlice();
 
   const {
     inputValue,
@@ -32,26 +34,28 @@ export const CrearAnime = () => {
     portadaCap,
     Duracion,
     setKey: setKeyCap,
-    onResetForm:onResetFormCap
+    onResetForm: onResetFormCap
   } = useForm({
     nameCapitulo: "",
     Capitulo: 1,
     portadaCap: 0,
-    Duracion:0
+    Duracion: 0
   });
   const keyUnique = 1
+  const keyUnique2 = 1
 
- 
 
-  const CrearAnime = async(e) => {
-      e.preventDefault()
-      const imgurlPortada = await fileupload(Portada)
-      newAnime({name:name,Portada:imgurlPortada,fechaEmision:fechaEmision,FechaFinalizacion:FechaFinalizacion,Capitulos:capitulos,Generos:Generos,sinopsis});
 
-      // onResetForm()
-      // setPreviewImage(undefined)
-      // setKey({key:"Generos",value:[]})
-    
+
+  const CrearAnime = async (e) => {
+    e.preventDefault()
+    const imgurlPortada = await fileupload(Portada)
+    newAnime({ name: name, Portada: imgurlPortada, fechaEmision: fechaEmision, FechaFinalizacion: FechaFinalizacion, Capitulos: capitulos, Generos: Generos, sinopsis, Tipo: Tipo });
+
+    // onResetForm()
+    // setPreviewImage(undefined)
+    // setKey({key:"Generos",value:[]})
+
   };
 
   // para cargar imagenes de portada Anime
@@ -84,24 +88,22 @@ export const CrearAnime = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFileCap]);
 
-  const loadCap = async(e)=> {
+  const loadCap = async (e) => {
     e.preventDefault();
-    if(portadaCap) {
+    if (portadaCap) {
       const imgurl = await fileupload(portadaCap)
-      setcapitulos([...capitulos,{...inputValue,portadaCap:imgurl}])
+      setcapitulos([...capitulos, { ...inputValue, portadaCap: imgurl }])
       onResetFormCap()
       setPreviewImageCap(undefined)
-      setKeyCap({key:"Numero",value:Capitulo +1})
+      setKeyCap({ key: "Numero", value: Capitulo + 1 })
 
-
-      
-    } 
+    }
   }
 
-  
+
   return (
     <div className="h-full w-full box-content">
-        <form
+      <form
         className=" w-full h-full  grid grid-cols-3 box-border p-4  "
         onSubmit={CrearAnime}
       >
@@ -123,11 +125,11 @@ export const CrearAnime = () => {
                 }}
                 type="file"
                 className="hidden"
-                
+
               />
             </label>
           </div>
-          
+
 
           <div className="flex flex-col w-full">
             <label htmlFor="nombre" className="text-white">
@@ -140,7 +142,7 @@ export const CrearAnime = () => {
               id="nombre"
               placeholder="Ej:One Piece"
               value={name}
-              onChange={(e)=> setKey({key:"name",value:e.target.value})}
+              onChange={(e) => setKey({ key: "name", value: e.target.value })}
               className="bg-transparent text-white border-b-[1px] border-amber-600 h-[40px] px-[10px]  outline-none"
             />
           </div>
@@ -154,8 +156,8 @@ export const CrearAnime = () => {
               cols="50"
               className="bg-transparent text-white border-b-[1px] border-amber-600 h-[100px] max-h-[100px]  outline-none"
               placeholder="Una descripcion breve del anime..."
-              onChange={(e)=> setKey({key:"sinopsis",value:e.target.value})}
-              ></textarea>
+              onChange={(e) => setKey({ key: "sinopsis", value: e.target.value })}
+            ></textarea>
           </div>
           <div className="fechas flex flex-row ">
             <div className="fechaInicio">
@@ -181,8 +183,9 @@ export const CrearAnime = () => {
           </div>
         </div>
         <div className="h-full  flex flex-col justify-around items-center">
-          <div className="generos w-[550px] h-[200px] flex  items-center justify-around  ">
-            <GenerosDropdown setKey={setKey} key={keyUnique} />
+          <div className="generos w-[550px]  flex flex-col  items-center justify-around  ">
+            <TipoAnimeDropDown setKey={setKey} key={keyUnique} />
+            <GenerosDropdown setKey={setKey} key={keyUnique2} />
           </div>
           <div className=" w-[50%] flex flex-col justify-center mt-[50px] box-border ">
             <h1 className="text-white text-[20px] text-center">
@@ -197,7 +200,7 @@ export const CrearAnime = () => {
                   id="nameCapitulo"
                   placeholder="Nombre Capitulo"
                   value={nameCapitulo}
-                  onChange={(e)=> setKeyCap({key:"nameCapitulo",value:e.target.value})}
+                  onChange={(e) => setKeyCap({ key: "nameCapitulo", value: e.target.value })}
                   className="bg-transparent text-white border-b-[1px] border-amber-600 h-[40px] px-[10px] w-full outline-none"
                 />
                 <div className="numeros box-border">
@@ -209,7 +212,7 @@ export const CrearAnime = () => {
                       id="Capitulo"
                       placeholder="Ej:1"
                       value={Capitulo}
-                      onChange={(e)=> setKeyCap({key:"Capitulo",value:e.target.value})}
+                      onChange={(e) => setKeyCap({ key: "Capitulo", value: e.target.value })}
                       min={0}
                       className="bg-transparent text-white border-b-[1px] border-amber-600 w-[100px]  px-[10px]  outline-none"
                     />
@@ -223,7 +226,7 @@ export const CrearAnime = () => {
                       id="Duracion"
                       placeholder="Ej:23"
                       value={Duracion}
-                      onChange={(e)=> setKeyCap({key:"Duracion",value:e.target.value})}
+                      onChange={(e) => setKeyCap({ key: "Duracion", value: e.target.value })}
                       className="bg-transparent text-white border-b-[1px] border-amber-600 w-[100px] px-[10px]  outline-none"
                     />
                   </div>
@@ -240,19 +243,19 @@ export const CrearAnime = () => {
                     />
                   </div>
                   <div className="flex flex-row justify-between">
-                  <label className="cursor-pointer  flex justify-between">
-                    <span className="bg-gradient-to-r from-amber-600 to-amber-400 flex justify-center w-[50px] h-[50px]   text-white rounded-full  ">
-                      <p className="text-[30px]">+</p>
-                    </span>
-                    <input
-                      onChange={(files) => {
-                        setSelectedFIleCap(files?.target.files[0]);
-                      }}
-                      type="file"
-                      className="hidden"
-                    />
-                  </label>
-                    <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2" onClick={loadCap} >Agregar Capitulo</button>                  
+                    <label className="cursor-pointer  flex justify-between">
+                      <span className="bg-gradient-to-r from-amber-600 to-amber-400 flex justify-center w-[50px] h-[50px]   text-white rounded-full  ">
+                        <p className="text-[30px]">+</p>
+                      </span>
+                      <input
+                        onChange={(files) => {
+                          setSelectedFIleCap(files?.target.files[0]);
+                        }}
+                        type="file"
+                        className="hidden"
+                      />
+                    </label>
+                    <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2" onClick={loadCap} >Agregar Capitulo</button>
                   </div>
                 </div>
               </div>
@@ -261,14 +264,14 @@ export const CrearAnime = () => {
         </div>
         <div className="w-full h-full max-h-[90vh]  p-[50px] text-white flex flex-col items-center box-border  ">
           <div className="w-full h-full flex flex-col items-center overflow-y-scroll mb-10">
-          <p>Capitulos</p>
-          {
-            (capitulos[0])?
-            capitulos.map((capitulo)=> {
-              return <AnimeCapInserts key={capitulo.Capitulo} infoCap={capitulo}/>
-            }):
-            <div className="text-white text-[20px] p-[20px]">No hay Capitulo agregado</div>
-          } 
+            <p>Capitulos</p>
+            {
+              (capitulos[0]) ?
+                capitulos.map((capitulo) => {
+                  return <AnimeCapInserts key={capitulo.Capitulo} infoCap={capitulo} />
+                }) :
+                <div className="text-white text-[20px] p-[20px]">No hay Capitulo agregado</div>
+            }
           </div>
           <button className="bg-gradient-to-r from-amber-600 to-amber-400 text-white h-[50px]  rounded-[100px] px-2">Crear Anime</button>
 

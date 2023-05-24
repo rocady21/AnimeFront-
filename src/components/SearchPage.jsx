@@ -2,13 +2,13 @@ import React from 'react'
 import { useAnimeSlice } from '../hooks/useAnimeSlice'
 import { AnimeCard } from './miniComponents/AnimeCard'
 import { useEffect } from 'react'
-import { useFriendRequest } from '../hooks/useFriendRequest'
+import { useFriendSlice } from '../hooks/useFriendSlice'
 import { PeopleCard } from './miniComponents/PeopleCard'
 
 export const SearchPage = () => {
 
     const { resultsSearch, LoadAnimes } = useAnimeSlice()
-    const { peoples } = useFriendRequest()
+    const { peoples } = useFriendSlice()
 
 
     console.log(peoples)

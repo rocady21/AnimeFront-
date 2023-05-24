@@ -2,13 +2,13 @@ import React from 'react'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupIcon from '@mui/icons-material/Group';
-import { useFriendRequest } from '../../hooks/useFriendRequest';
+import { useFriendSlice } from '../../hooks/useFriendSlice';
 import { useUserSlice } from '../../hooks/useUserSlice';
 import { useNavigate } from 'react-router-dom';
 export const PeopleCard = ({ infoPeople }) => {
     const navigate = useNavigate()
 
-    const { AddFriend, solicitudState } = useFriendRequest()
+    const { AddFriend, solicitudState } = useFriendSlice()
     const { user } = useUserSlice()
 
     const addFriend = () => {

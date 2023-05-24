@@ -8,10 +8,10 @@ export const useAnimeSlice = () => {
     const dispach = useDispatch()
     const { animes, isLoading, results, resultsSearch, infoCapPage, resultsComentarios } = useSelector((state) => state.anime)
 
-    const newAnime = async ({ name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis }) => {
+    const newAnime = async ({ name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis, Tipo }) => {
         try {
             //peticion post a la base de datos
-            const resp = await animeApi.post("/anime/new", { name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis })
+            const resp = await animeApi.post("/anime/new", { name, Portada, fechaEmision, FechaFinalizacion, Capitulos, Generos, sinopsis, Tipo })
         } catch (error) {
         }
     }

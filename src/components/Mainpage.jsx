@@ -3,35 +3,35 @@ import { useSelector } from 'react-redux'
 import { AdminRouter } from '../AppRoutes/AdminRouter'
 import { AppRouter } from '../AppRoutes/AppRouter'
 import { useUserSlice } from '../hooks/useUserSlice'
-import { useFriendRequest } from '../hooks/useFriendRequest'
+import { useFriendSlice } from '../hooks/useFriendSlice'
 import { useEffect } from 'react'
 
 
 export const Mainpage = () => {
-  const {user} = useUserSlice()
+  const { user } = useUserSlice()
 
-  const {LoadFriendsRequest} = useFriendRequest()
+  const { LoadFriendsRequest } = useFriendSlice()
   useEffect(() => {
-      LoadFriendsRequest({id_user:user._id})
+    LoadFriendsRequest({ id_user: user._id })
   }, []);
 
 
 
-  const {rol} = user
-  
+  const { rol } = user
+
   return (
     <div className='w-full h-full'>
       {
-        (rol === "user")?
-        (
-        <AppRouter/>
-        ): 
-        (
-        <AdminRouter/>
-        )
+        (rol === "user") ?
+          (
+            <AppRouter />
+          ) :
+          (
+            <AdminRouter />
+          )
       }
-      
+
     </div>
 
-    )
+  )
 }

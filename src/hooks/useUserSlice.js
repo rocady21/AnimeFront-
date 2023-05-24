@@ -69,11 +69,17 @@ export const useUserSlice = () => {
     }
 
 
-    const startLogout = () => {
-        localStorage.clear()
-        Dispatch(onLogout())
-        navigate("/login")
+    const startLogout = async (id_user) => {
+        try {
+            const { data } = await animeApi.post("/user/userDissconect", { id_user })
+            localStorage.clear()
+            Dispatch(onLogout())
+            navigate("/login")
 
+
+        } catch (error) {
+
+        }
     }
 
     const addFavoriteAnime = async ({ id_user, idAnime }) => {
@@ -83,7 +89,7 @@ export const useUserSlice = () => {
             comentario: ""
         }
         try {
-            const { data } = await animeApi.post("/auth/addAnimeFav", { id_user, Data })
+            const { data } = await animeApi.post("/user/addAnimeFav", { id_user, Data })
             console.log(data)
 
         } catch (error) {
@@ -96,7 +102,7 @@ export const useUserSlice = () => {
     const listAnimeFavorite = async ({ id_User }) => {
         // lista de usuarios favoritos del usuario 
         try {
-            const { data } = await animeApi.post("/auth/listAnimeFav", { id_User })
+            const { data } = await animeApi.post("/user/listAnimeFav", { id_User })
             if (data) {
                 Dispatch(onLoadAnimesFav(data.AnimesFav))
             }
@@ -109,6 +115,9 @@ export const useUserSlice = () => {
     const LimpiarMessageError = () => {
         Dispatch(CLearMessageError())
     }
+
+
+
     return {
         user,
         startLogin,

@@ -1,21 +1,21 @@
 import React from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import { FriendRequestCard } from '../miniComponents/FriendRequestCard';
-import { useFriendRequest } from '../../hooks/useFriendRequest';
+import { useFriendSlice } from '../../hooks/useFriendSlice';
 import { useUserSlice } from '../../hooks/useUserSlice';
 import { useEffect } from 'react';
 
 
 export const ModalFriendRequest = ({ closeModal, friendRequest }) => {
 
-    const close = ()=> {
+    const close = () => {
         closeModal(false)
     }
-    
-    const {user} = useUserSlice()
-    const {LoadFriendsRequest} = useFriendRequest()
+
+    const { user } = useUserSlice()
+    const { LoadFriendsRequest } = useFriendSlice()
     useEffect(() => {
-        LoadFriendsRequest({id_user:user._id})
+        LoadFriendsRequest({ id_user: user._id })
     }, []);
 
 

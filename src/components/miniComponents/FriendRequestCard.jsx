@@ -1,12 +1,12 @@
 import React from 'react'
-import { useFriendRequest } from '../../hooks/useFriendRequest'
+import { useFriendSlice } from '../../hooks/useFriendSlice'
 import { useUserSlice } from '../../hooks/useUserSlice'
 
 
 export const FriendRequestCard = ({ requestInfo }) => {
 
     const { user } = useUserSlice()
-    const { AcceptFriendRequest, DeclineFriendRequest } = useFriendRequest()
+    const { AcceptFriendRequest, DeclineFriendRequest } = useFriendSlice()
 
     const AceptarSolicitud = () => {
         AcceptFriendRequest({ id_me: user._id, id_friend: requestInfo._id })

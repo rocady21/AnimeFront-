@@ -1,33 +1,33 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById, onAddNewFriendRequestRealTime, onLoadFriend } from "../store/Slices/friendSlice/friendSlice"
+import { onLoadFriendRequest, onAcceptFriendRequest, onDeclineFriendRequest, onClearRequestFriend, onAddFriendOnline, onSearchPeople, onStateFriendRequest, onloadUserById, onAddNewFriendRequestRealTime, onLoadFriend, onRemoveFriendOnline, onLoadFriendsOnlineAndOffline, } from "../store/Slices/friendSlice/friendSlice"
 import animeApi from "../AxiosConection/animeApi"
 
 
-export const useFriendRequest = () => {
+export const useFriendSlice = () => {
 
 
-    const { friends, friendRequest, solicitudState, peoples, resultsPeople } = useSelector((state) => state.friend)
+    const { friends, friendRequest, peoples, resultsPeople, FriendsOnlineAndOffline } = useSelector((state) => state.friend)
     const dispach = useDispatch()
 
     const AddFriend = async ({ id_me, id_friend }) => {
         try {
-            const { data } = await animeApi.put("/auth/newFriend", { id_me, id_friend })
+            const { data } = await animeApi.put("/user/newFriend", { id_me, id_friend })
             dispach(onStateFriendRequest("send"))
         } catch (error) {
             console.log(error)
         }
     }
 
-    const LoadFriends = async({ id_user }) => {
+    const LoadFriends = async ({ id_user }) => {
         try {
-            if(id_user) {
-                const {data} = await animeApi.post("/auth/litFriends",{id_user})
-                if(data.ok === true) {
+            if (id_user) {
+                const { data } = await animeApi.post("/user/litFriends", { id_user })
+                if (data.ok === true) {
                     dispach(onLoadFriend(data.listFriends))
                 }
             }
         } catch (error) {
-            
+
         }
     }
 
@@ -36,7 +36,7 @@ export const useFriendRequest = () => {
         const idUser = id_user
         try {
             if (id_user) {
-                const { data } = await animeApi.post("/auth/getFriendRequest", { idUser })
+                const { data } = await animeApi.post("/user/getFriendRequest", { idUser })
 
                 if (data) {
                     dispach(onLoadFriendRequest(data.listFriends))
@@ -59,7 +59,7 @@ export const useFriendRequest = () => {
                 return;
             }
 
-            const { data } = await animeApi.put("/auth/aceptarAmigo", { id_me, id_friend })
+            const { data } = await animeApi.put("/user/aceptarAmigo", { id_me, id_friend })
             console.log("mando la peticion:D")
 
 
@@ -84,7 +84,7 @@ export const useFriendRequest = () => {
         try {
             if (valueSearch) {
                 //peticion a base de datos de todos los usuarios
-                const { data } = await animeApi.get("/auth/listU")
+                const { data } = await animeApi.get("/user/listU")
 
                 if (data.usuarios) {
                     dispach(onSearchPeople({ usuarios: data.usuarios, valueSearch: valueSearch }))
@@ -100,10 +100,10 @@ export const useFriendRequest = () => {
     const loadInfoUser = async ({ id_user }) => {
         try {
             console.log("Hola :D")
-            const { data } = await animeApi.post("/auth/getUserById", { id_user })
+            const { data } = await animeApi.post("/user/getUserById", { id_user })
 
             if (data.ok === true) {
-                dispach(onloadUserById(data.userInfo[0]))
+                dispach(onloadUserById(data.userInfo))
             } else {
                 console.log("error")
             }
@@ -114,10 +114,10 @@ export const useFriendRequest = () => {
 
     const LoadFriendRequestRealTime = async (id_user) => {
         try {
-            const { data } = await animeApi.post("/auth/getUserById", { id_user })
+            const { data } = await animeApi.post("/user/getUserById", { id_user })
             if (data) {
                 console.log(data)
-                const {userInfo} = data
+                const { userInfo } = data
                 console.log(userInfo)
                 const friendRequestInfo = {
                     _id: userInfo._id,
@@ -132,13 +132,60 @@ export const useFriendRequest = () => {
         }
     }
 
+    const loadFriendsOffline = async ({ id_user }) => {
+        console.log("te amo mucho")
+        console.log(id_user)
+        try {
+            if (id_user) {
+                const { data } = await animeApi.post("/user/listFriends", { id_user })
+                if (data.ok === true) {
+                    dispach(onLoadFriendsOnlineAndOffline(data.listFriends))
+                }
+            }
+        } catch (error) {
+
+        }
+    }
+    const loadFriendsOnline = async (id_me) => {
+        try {
+            const { data } = await animeApi.post("/user/friendsOnline", { id_me })
+
+            if (data.ok === true) {
+                dispach(onLoadFriendsOnlineAndOffline(data.usersOnline))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const setFriendsOnline = (userID) => {
+        try {
+            if (userID) {
+                return dispach(onAddFriendOnline(userID))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const removeFriendOnline = (userID) => {
+        if (userID) {
+            console.log(userID)
+            console.log("xddxxdAA")
+            dispach(onRemoveFriendOnline(userID))
+        }
+
+    }
+
+
 
     return {
         friends,
         friendRequest,
-        solicitudState,
         peoples,
         resultsPeople,
+        FriendsOnlineAndOffline,
         LoadFriends,
         AddFriend,
         AcceptFriendRequest,
@@ -146,7 +193,11 @@ export const useFriendRequest = () => {
         DeclineFriendRequest,
         SearchPeople,
         loadInfoUser,
-        LoadFriendRequestRealTime
+        LoadFriendRequestRealTime,
+        loadFriendsOnline,
+        setFriendsOnline,
+        removeFriendOnline,
+        loadFriendsOffline
 
     }
 }

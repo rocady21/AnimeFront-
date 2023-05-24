@@ -9,27 +9,48 @@ export const friendSlice = createSlice({
         friendRequest: [],
         peoples: [],
         friends: [],
-        solicitudState: "no-send",
+        FriendsOnlineAndOffline: [],
         resultsPeople: {}
     },
     reducers: {
         onLoadFriend: (state, { payload }) => {
-            state.friendRequest = [],
-                state.friends = payload,
-                state.solicitudState = false
+            state.friends = payload
+        },
+        onLoadFriendsOnlineAndOffline: (state, { payload }) => {
+            state.FriendsOnlineAndOffline = payload
+        },
+        // añadir solo seria cambiar el estado del usuario con el id que reciba
+        onAddFriendOnline: (state, { payload }) => {
+            const userID = payload
+            console.log(userID)
+            state.FriendsOnlineAndOffline = state.FriendsOnlineAndOffline.map((friend) => {
+                if (friend._id === userID) {
+                    return { ...friend, status: "Online" }
+                }
+                return friend
+            })
+
+        },
+        // remover solo seria cambiar el estado a fals del usuario con el id que reciba
+        onRemoveFriendOnline: (state, { payload }) => {
+            const userID = payload
+            state.FriendsOnlineAndOffline = state.FriendsOnlineAndOffline.map((friend) => {
+                if (friend._id === userID) {
+                    return { ...friend, status: "Offline" }
+                }
+                return friend
+            })
         },
         onLoadFriendRequest: (state, { payload }) => {
             state.friendRequest = payload
         },
         onAcceptFriendRequest: (state, { payload }) => {
             state.friendRequest = payload,
-                state.friends = [],
-                state.solicitudState = "accept"
+                state.friends = []
         },
         onDeclineFriendRequest: (state, { payload }) => {
             state.friendRequest = payload,
-                state.friends = [],
-                state.solicitudState = false
+                state.friends = []
         },
         onClearRequestFriend: (state, { payload }) => {
             state.friendRequest = []
@@ -46,20 +67,16 @@ export const friendSlice = createSlice({
                 state.peoples = filtradoUsuariosByValue
             }
         },
-        onStateFriendRequest: (state, { payload }) => {
-            state.solicitudState = payload
-        },
         onloadUserById: (state, { payload }) => {
             state.resultsPeople = payload
         },
         onAddNewFriendRequestRealTime: (state, { payload }) => {
-            console.log("esta es la info del usuario que se añade")
-            console.log(payload)
             state.friendRequest = [...state.friendRequest, payload]
         }
+
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onAddNewFriendRequestRealTime, onDeclineFriendRequest, onClearRequestFriend, onSearchPeople, onStateFriendRequest, onloadUserById } = friendSlice.actions
+export const { onLoadFriend, onLoadFriendRequest, onAcceptFriendRequest, onAddNewFriendRequestRealTime, onLoadFriendsOnlineAndOffline, onRemoveFriendOnline, onAddFriendOnline, onDeclineFriendRequest, onClearRequestFriend, onLoadriendsOffline, onSearchPeople, onStateFriendRequest, onloadUserById } = friendSlice.actions
