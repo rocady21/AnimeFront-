@@ -36,6 +36,15 @@ body {
 .fondo{
   box-shadow: 1px 5px 14px 5px rgba(255,187,14,0.37);
 }
+.buttonInteracciones{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.buttonInteracciones p{
+  margin-left: 15px;  
+  font-size: 12px;
+}
 
 
 

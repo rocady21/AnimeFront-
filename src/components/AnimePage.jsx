@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useAnimeSlice } from '../hooks/useAnimeSlice'
 import { AnimeCard } from './miniComponents/AnimeCard';
+import { useLocation } from 'react-router-dom';
 
 export const AnimePage = () => {
 
@@ -11,6 +12,7 @@ export const AnimePage = () => {
   useEffect(() => {
     LoadAnimes();
   }, []);
+
 
 
 

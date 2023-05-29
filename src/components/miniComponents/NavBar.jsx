@@ -126,10 +126,10 @@ export const NavBar = () => {
 
             }
           </button>
-          <NavLink className={"flex flex-row items-center"} to={"/perfil"}>
+          <a className={"flex flex-row items-center"} href={"/perfil"}>
             <img className="w-[50px] h-[50px] bg-white mr-[15px] object-cover object-center rounded-full" src={photo || undefined} alt="" />
             <p className="mr-[30px]">Perfil</p>
-          </NavLink>
+          </a>
           <button onClick={logoutSession}>Logout</button>
         </div>
         {

@@ -32,12 +32,12 @@ export const useUserSlice = () => {
         }
     }
 
-    const RegisterUsuario = async ({ photo, name, email, password }) => {
+    const RegisterUsuario = async ({ photo, portada, name, email, password }) => {
 
         try {
             // peticion a bdd
             const rol = "user"
-            const resp = await animeApi.post("/auth/new", { photo, name, email, password, rol });
+            const resp = await animeApi.post("/auth/new", { photo, portada, name, email, password, rol });
             // guardar token en localStorage
             localStorage.setItem("token", resp.token)
             localStorage.setItem("token-init-date", new Date().getTime())

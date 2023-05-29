@@ -116,19 +116,19 @@ export const useAnimeSlice = () => {
 
 
     return {
-        LoadAnimes,
+        infoCapPage,
+        resultsComentarios,
         animes,
         isLoading,
+        results,
+        resultsSearch,
+        LoadAnimes,
         newAnime,
         filterAnimeById,
-        results,
         filterAnimeCap,
-        resultsSearch,
         searchAnime,
         getCapituloById,
-        infoCapPage,
         AgregarComentario,
         CargarComentarios,
-        resultsComentarios,
     }
 }

@@ -15,6 +15,7 @@ import { InfoUser } from '../components/PerfilComponents/informacionUser'
 import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
 import { PostPageNav } from '../components/PostPageNav'
 import { ProfilePeople } from '../components/ProfilePeople'
+import { ShowThoughtPage } from '../components/ShowThoughtPage'
 
 
 
@@ -32,6 +33,7 @@ export const AppRouter = () => {
         <Route path='/mangas' element={<MangaPage />} />
         <Route path='/perfil' element={<PerfilPage />} />
         <Route path='/post' element={<PostPageNav />} />
+        <Route path='/post/:idPost' element={<ShowThoughtPage />} />
         <Route path='/animes/:idAnime' element={<AnimeInfoCompleto />} />
         <Route path='/searchPage' element={<SearchPage />} />
         <Route path='/perfil/:id_people' element={<ProfilePeople />} />

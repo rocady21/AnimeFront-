@@ -1,7 +1,7 @@
 import { useReducer } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import animeApi from "../AxiosConection/animeApi"
-import { onCreateNewPost, onLoadPostsUser } from "../store/Slices/PostSlice/postSlice"
+import { onCreateNewPost, onLoadPostsUser, onShowThought } from "../store/Slices/PostSlice/postSlice"
 
 
 
@@ -10,10 +10,14 @@ export const usePosterSlice = () => {
     const { post, isLoading, resultsPost } = useSelector((state) => state.post)
     const dispach = useDispatch()
 
-    const LoadPostersUser = async ({ id_user }) => {
+    const LoadPostersUser = async (id_user) => {
         try {
             const { data } = await animeApi.post("/posts/filterPost", { id_user })
-            dispach(onLoadPostsUser(data.userPost))
+            if (data) {
+                dispach(onLoadPostsUser(data.userPost))
+                console.log(data)
+            }
+            console.log("no hay data")
 
         } catch (error) {
             console.log("error al cargar el/los posts de este usuario")
@@ -21,17 +25,28 @@ export const usePosterSlice = () => {
 
     }
 
-    const CreateNewPoster = async ({ descripcion, foto, id_user_publicate, Ubicacion, Tipo, MeGusta, Comentarios, FechaPublicacion }) => {
-        try {
-            if (foto && Tipo && descripcion) {
-                console.log("aqui pasa el if")
+    const CreateNewPoster = async ({ descripcion, id_user, Tipo }) => {
 
-                const { data } = await animeApi.post("/posts/newPost", { descripcion, foto, id_user_publicate, Ubicacion, Tipo, MeGusta, Comentarios, FechaPublicacion })
+        console.log(descripcion)
+        const initialPost = {
+            Descripcion: descripcion,
+            Foto: "",
+            Id_user_publicate: id_user,
+            Ubicacion: "San jose de mayo",
+            Tipo: Tipo,
+            MeGusta: 0,
+            NoMeGusta: 0,
+            Comentarios: [],
+            FechaPublicacion: new Date()
+        }
+
+        try {
+            console.log("antes de que se mande el post")
+
+            const { data } = await animeApi.post("/posts/newPost", initialPost)
+            if (data.ok === true) {
+                dispach(onCreateNewPost(data.post))
                 console.log(data)
-                if (data) {
-                    dispach(onCreateNewPost(data.post))
-                    console.log(dispach)
-                }
             }
 
 
@@ -39,6 +54,21 @@ export const usePosterSlice = () => {
 
         }
 
+    }
+    const filterPostById = async ({ id_post }) => {
+
+        try {
+            if (id_post) {
+                const { data } = await animeApi.post("/posts/filterPostById", { id_post })
+                if (data.ok === true) {
+                    console.log(data)
+                    dispach(onShowThought(data.post))
+                }
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -48,7 +78,8 @@ export const usePosterSlice = () => {
         isLoading,
         resultsPost,
         LoadPostersUser,
-        CreateNewPoster
+        CreateNewPoster,
+        filterPostById
 
     }
 }

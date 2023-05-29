@@ -7,7 +7,7 @@ export const postSlice = createSlice({
   initialState: {
     post: [],
     isLoading: false,
-    resultsPost: []
+    resultsPost: undefined
   },
   reducers: {
     onLoadPostsUser: (state, { payload }) => {
@@ -25,9 +25,12 @@ export const postSlice = createSlice({
         state.isLoading = true,
         state.resultsPost = []
     },
+    onShowThought: (state, { payload }) => {
+      state.resultsPost = payload
+    }
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadPostsUser, onCreateNewPost } = postSlice.actions
+export const { onLoadPostsUser, onCreateNewPost, onShowThought } = postSlice.actions
