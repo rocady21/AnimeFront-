@@ -34,8 +34,8 @@ export const usePosterSlice = () => {
             Id_user_publicate: id_user,
             Ubicacion: "San jose de mayo",
             Tipo: Tipo,
-            MeGusta: 0,
-            NoMeGusta: 0,
+            MeGusta: [],
+            NoMeGusta: [],
             Comentarios: [],
             FechaPublicacion: new Date()
         }
@@ -70,6 +70,60 @@ export const usePosterSlice = () => {
             console.log(error)
         }
     }
+    const handleInteractions = async (data, key) => {
+        try {
+            if (key === "addLike") {
+                const res = await animeApi.post("/posts/addLike", { data })
+                return;
+
+            } else if (key === "quitLike") {
+                const res = await animeApi.post("/posts/quitLike", { data })
+                return;
+
+            } else if (key === "addDislike") {
+                const res = await animeApi.post("/posts/addDislike", { data })
+                return;
+            } else if (key === "quitDislike") {
+                const res = await animeApi.post("/posts/quitDisLike", { data })
+                return;
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const handleAddComentarios = () => {
+        try {
+
+        } catch (error) {
+
+        }
+    }
+
+    const checkStatusLikeAndDislike = async ({ id_user, id_post }) => {
+
+        try {
+            // con esta peticion veremos el estado de los likes
+            const { data } = await animeApi.post("/posts/LikeExist", { id_post, id_user })
+
+            const { data: data2 } = await animeApi.post("/posts/LikeExist", { id_post, id_user })
+
+            if (data && data2) {
+                localStorage.setItem("statusLike", data.status)
+                localStorage.setItem("statusDislike", data2.status)
+
+            }
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 
 
 
@@ -79,7 +133,9 @@ export const usePosterSlice = () => {
         resultsPost,
         LoadPostersUser,
         CreateNewPoster,
-        filterPostById
-
+        filterPostById,
+        handleInteractions,
+        handleAddComentarios,
+        checkStatusLikeAndDislike
     }
 }

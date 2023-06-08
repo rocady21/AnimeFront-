@@ -47,8 +47,8 @@ export const ThoughtCard = ({ postInfo, userInfo }) => {
                     </div>
                     <div className="interacciones w-[50%] h-[20%] flex flex-row justify-around text-white">
 
-                        <button className="buttonInteracciones"><AiOutlineHeart /> <p>{postInfo.MeGusta}</p></button>
-                        <button className='buttonInteracciones'><FcDislike /> <p>{postInfo.NoMeGusta}</p></button>
+                        <button className="buttonInteracciones"><AiOutlineHeart /> <p>{postInfo.MeGusta.length}</p></button>
+                        <button className='buttonInteracciones'><FcDislike /> <p>{postInfo.NoMeGusta.length}</p></button>
                         <button className='buttonInteracciones'><FaRegComment /> <p>0</p></button>
                         <button className='buttonInteracciones'><IoIosShareAlt /></button>
 

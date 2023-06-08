@@ -94,7 +94,7 @@ export const AnimeInfoCompleto = () => {
               </div>
               <div className="listadoCapitulos w-[50%] sinopsis box-border rounded-[5px]  ml-[28%] bg-slate-200 mt-[30px] px-[20px] py-[50px]">
                 <div className="tituloYBuscar w-full flex flex-row mb-[30px]  grid justify-items-stretch items-center relative ">
-                  <h1 className=" justify-self-center font-bold text-[30px] absolute" >Listado de Capitulos</h1>
+                  <h1 className=" justify-self-center font-bold text-[30px] " >Listado de Capitulos</h1>
                   <div className="justify-self-end">
                     <input type="search" className="outline-none px-3 py-1 rounded-lg " placeholder="Buscar..." value={search} onChange={guardarValorSearch} name="" id="" />
                     <button className="bg-amber-600 text-white py-1 px-5 italic rounded-md ">Buscar</button>

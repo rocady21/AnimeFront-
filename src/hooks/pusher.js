@@ -59,8 +59,36 @@ export const suscribeToDisconnect = (channelName, removeOnline) => {
       removeOnline(data.message);
     }
   });
-
   return data
 
 }
+
+
+export const suscribeToStatusLike = (channelName, updateLikes) => {
+
+  const channel = pusher.subscribe(channelName);
+
+  const data = channel.bind('addorquitLike', function (data) {
+    if (data) {
+      updateLikes(data.message);
+    }
+  });
+  return data
+
+}
+
+export const suscribeToStatuDisLike = (channelName, updateDislikes) => {
+
+  const channel = pusher.subscribe(channelName);
+
+  const data = channel.bind('addorquitDisLike', function (data) {
+    if (data) {
+      updateDislikes(data.message);
+    }
+  });
+  return data
+
+}
+
+
 //bind the event of the presence channel to get the data attched //with it 
