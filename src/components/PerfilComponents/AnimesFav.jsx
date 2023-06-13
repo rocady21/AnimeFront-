@@ -3,30 +3,30 @@ import { useUserSlice } from '../../hooks/useUserSlice'
 import { useEffect } from 'react'
 import { AnimeCard } from '../miniComponents/AnimeCard'
 
-export const AnimesFav = () => {
+export const AnimesFavoritos = ({ FavsAnime, id_people }) => {
 
-  const {user,listAnimeFavorite,resultsAnimesFav} = useUserSlice()
-  console.log("Animes FAv:")
-  console.log(resultsAnimesFav)
+  const { user, listAnimeFavorite, resultsAnimesFav } = useUserSlice()
+
+  const data = FavsAnime ? FavsAnime : resultsAnimesFav
+
 
   useEffect(() => {
-    listAnimeFavorite({id_User:user._id})
+    if (id_people) {
+      listAnimeFavorite({ id_User: id_people })
+    } else {
+      listAnimeFavorite({ id_User: user._id })
+    }
   }, []);
 
 
   return (
-    <div className='w-full h-full  '>
+    <div className='w-full bg-black/20 px-[20px] py-[50px] flex flex-row '>
       {
-        resultsAnimesFav[0]? 
-        <div className='grid grid-cols-3'>
-          {
-            resultsAnimesFav.map((animeFav)=> {
-              return <AnimeCard anime = {animeFav} key={animeFav._id}/>
-            })
-          }
-          
-        </div>
-        : <p>No tienes ningun Anime Favorito</p>
+        data ?
+          data.map((animeFav) => {
+            return <AnimeCard stateFav={true} anime={animeFav} />
+          }) :
+          <p className='text-center'>No Hay Animes Favoritos</p>
       }
 
     </div>

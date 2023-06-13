@@ -22,7 +22,6 @@ export const friendSlice = createSlice({
         // añadir solo seria cambiar el estado del usuario con el id que reciba
         onAddFriendOnline: (state, { payload }) => {
             const userID = payload
-            console.log(userID)
             state.FriendsOnlineAndOffline = state.FriendsOnlineAndOffline.map((friend) => {
                 if (friend._id === userID) {
                     return { ...friend, status: "Online" }

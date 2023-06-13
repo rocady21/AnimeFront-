@@ -85,7 +85,6 @@ export const ModalNewPost = ({ close }) => {
     }
     const CrearPublicacion = async (e) => {
         e.preventDefault()
-        console.log("jeje")
         // convertir imagen en url para que sea mas liviana
         const fotoUrl = await fileupload(selectedImage)
         // disparar accion que cree el post 

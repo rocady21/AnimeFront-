@@ -7,15 +7,11 @@ import { Mainpage } from '../components/Mainpage'
 import { MangaPage } from '../components/MangaPage'
 import { NavBar } from '../components/miniComponents/NavBar'
 import { PerfilPage } from '../components/PerfilPage'
-
-import { VerCapAnime } from '../components/VerCapAnime'
 import { SearchPage } from '../components/SearchPage'
-import PerfilRoutes from '../helpers/PerfilRoutes'
-import { InfoUser } from '../components/PerfilComponents/informacionUser'
-import { AnimesFav } from '../components/PerfilComponents/AnimesFav'
 import { PostPageNav } from '../components/PostPageNav'
 import { ProfilePeople } from '../components/ProfilePeople'
 import { ShowThoughtPage } from '../components/ShowThoughtPage'
+import { ChatPage } from '../components/ChatPage'
 
 
 
@@ -31,12 +27,14 @@ export const AppRouter = () => {
         <Route path='/inicio' element={<InicioPage />} />
         <Route path='/anime' element={<AnimePage />} />
         <Route path='/mangas' element={<MangaPage />} />
+        <Route path='/chat' element={<ChatPage />} />
         <Route path='/perfil' element={<PerfilPage />} />
         <Route path='/post' element={<PostPageNav />} />
         <Route path='/post/:idPost' element={<ShowThoughtPage />} />
         <Route path='/animes/:idAnime' element={<AnimeInfoCompleto />} />
         <Route path='/searchPage' element={<SearchPage />} />
         <Route path='/perfil/:id_people' element={<ProfilePeople />} />
+
 
 
       </Routes>

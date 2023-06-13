@@ -90,7 +90,7 @@ export const useAnimeSlice = () => {
             dispach(onAddNewComent(camposaActualizar))
         } catch (error) {
             console.log("no se pudo agregar el comentario")
-            console.log(error)
+
         }
 
 

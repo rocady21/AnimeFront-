@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const useForm = (initialForm = {}) => {
+export const useForm = (initialForm = []) => {
 
   const [inputValue, setInputValue] = useState(initialForm);
 

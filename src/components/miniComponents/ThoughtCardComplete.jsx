@@ -1,36 +1,39 @@
 import React from "react"
-import { AiOutlineHeart } from "react-icons/ai"
-import { FcDislike } from "react-icons/fc"
 import { IoIosShareAlt } from "react-icons/io"
-import { FaRegComment } from "react-icons/fa"
 import { GrMoreVertical } from "react-icons/gr"
-import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import SendIcon from '@mui/icons-material/Send';
 import { usePosterSlice } from "../../hooks/usePostersSlice"
 import { useUserSlice } from "../../hooks/useUserSlice"
 import { useEffect } from "react"
 import { useForm } from "../../hooks/useForm"
 import { suscribeToStatusLike, suscribeToStatuDisLike } from "../../hooks/pusher"
+import { ComentarioThought } from "./ComentarioThought"
+// import interacciones
+import { AiFillLike } from "react-icons/ai"
+import { AiFillDislike } from "react-icons/ai"
+import { FaRegComment } from "react-icons/fa"
+import SendIcon from '@mui/icons-material/Send';
 
-
-export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
+export const ThoughtCardComplete = ({ postInfo }) => {
     const { Comentarios } = postInfo
-    const { handleInteractions, handleAddComentario, checkStatusLikeAndDislike } = usePosterSlice()
-    const { user } = useUserSlice()
+    const { handleInteractions, handleAddComentarios, checkStatusLikeAndDislike, handleLoadComentsByPost, resultsComentarios, } = usePosterSlice()
+    const { user, peopleInfo: userInfo, loadUserById } = useUserSlice()
     const [stateAddComentario, setstateAddComentario] = useState(false)
     // likes y dislikes 
     const [MeGusta, setMeGusta] = useState(postInfo.MeGusta.length)
     const [NoMeGusta, setNoMeGusta] = useState(postInfo.NoMeGusta.length)
     // form para agregar Comentario
-    const { inputValue, comentario: ComentarioInput, setKey } = useForm({
+    const { inputValue, comentario: ComentarioInput, setKey, onResetForm } = useForm({
         id_User: user._id,
         photo: user.photo,
+        name: user.name,
         comentario: "",
         valoracion: 0,
         Fecha: new Date(),
         MeGusta: 0
     })
+
+
 
     const statusLikes = (likes) => {
         setMeGusta(likes)
@@ -51,8 +54,12 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
     useEffect(() => {
         checkStatusLikeAndDislike({ id_user: user._id, id_post: postInfo._id })
         suscribe()
+        // cargar comnetarios
+        handleLoadComentsByPost({ id_post: postInfo._id })
+        loadUserById({ id_user: postInfo.Id_user_publicate })
 
     }, [])
+
 
     const AddAndQuitlike = () => {
         const data = { id_post: postInfo._id, id_user: user._id }
@@ -66,7 +73,7 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
         } else if (statusLike === "Liked") {
             const key = "quitLike"
             handleInteractions(data, key)
-            localStorage.setItem("statusLike", "NoLike")
+            localStorage.setItem("statusLike", "NoLiked")
         }
     }
 
@@ -87,7 +94,13 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
         }
         return
     }
-    const addComentario = () => {
+    const addComentario = (e) => {
+        e.preventDefault()
+        if (ComentarioInput.length != 0) {
+            const data = inputValue
+            handleAddComentarios({ data, id_post: postInfo._id, key: "addComent" })
+            onResetForm()
+        }
 
     }
 
@@ -118,8 +131,8 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
                     </div>
                     <div className="interacciones w-[50%] h-[40%] flex flex-row justify-around text-white">
 
-                        <button className="buttonInteracciones" onClick={AddAndQuitlike}><AiOutlineHeart /> <p>{MeGusta}</p></button>
-                        <button className='buttonInteracciones' onClick={AddAndQuitDislike}><FcDislike /> <p>{NoMeGusta}</p></button>
+                        <button className="buttonInteracciones" onClick={AddAndQuitlike}><AiFillLike /> <p>{MeGusta}</p></button>
+                        <button className='buttonInteracciones' onClick={AddAndQuitDislike}><AiFillDislike /> <p>{NoMeGusta}</p></button>
                         <button className='buttonInteracciones'><FaRegComment onClick={() => setstateAddComentario(!stateAddComentario)} /> <p>{Comentarios.length}</p></button>
                         <button className='buttonInteracciones'><IoIosShareAlt /></button>
 
@@ -133,7 +146,7 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
                 <div className="ingresarComentario px-[50px]" >
                     {
                         stateAddComentario === true &&
-                        <form className="flex flex-row items-center justify-between py-[25px]">
+                        <form onSubmit={addComentario} className="flex flex-row items-center justify-between py-[25px]">
                             <input type="text" className="bg-black/0 w-full outline-none text-white px-[20px] border-b-[2px] border-amber-500  min-h-[50px] max-h-[100px]" value={ComentarioInput} onChange={(e) => setKey({ key: "comentario", value: e.target.value })} placeholder="Escriba Su comentario" />
                             <button className="w-[50px] p-[10px] m-4 h-[50px] bg-amber-600 rounded-full flex flex-row items-center justify-center" ><SendIcon sx={{ color: "white", fontSize: 25 }} /></button>
                         </form>
@@ -141,31 +154,9 @@ export const ThoughtCardComplete = ({ postInfo, userInfo }) => {
                 </div>
                 <div className="Comentarios flex flex-col w-full p-[50px] ">
                     {
-                        (!Comentarios[0]) ? <div className="w-full flex flex-col text-white">
-                            <div className="comentario flex flex-row">
-                                <div className="img w-[10%]">
-                                    <img className="h-[50px] w-[50px] object-cover object-center rounded-full" src="../../../icons/kokushibo.jpg" alt="" />
-                                </div>
-                                <div className="texto w-[80%] flex flex-col" >
-                                    <div className="w-[35%] flex flex-row justify-between">
-                                        <p className="mb-[10px] font-bold">Rodrigo Olivera</p>
-                                        <p className="font-bold">-</p>
-                                        <p className="text-gray-400">Hace 15 mn</p>
-                                    </div>
-                                    <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facer fugit possimus eos voluptate esse excepturi eligendi amet magni mollitia. Autem quibusdam doloribus hic! Excepturi quidem blanditiis, nam voluptatem quod temporibus?</p>
-                                </div>
-                                <div className="opciones w-[10%] flex flex-col justify-start ">
-                                    <button className="opciones self-center">
-                                        <GrMoreVertical />
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="interacciones w-[60%] flex flex-row justify-around py-[15px]">
-                                <button className="like">Like</button>
-                                <button className="dislike">NoLike</button>
-                                <button className="Responder">Responder</button>
-                            </div>
-                        </div> : <div className="py-[20px] text-center self-center">No hay Comentarios...</div>
+                        (Array.isArray(resultsComentarios)) ? resultsComentarios.map((comentario) => {
+                            return <ComentarioThought infoComentario={comentario} key={comentario._id} />
+                        }) : <div className="py-[20px] text-center self-center">{resultsComentarios}</div>
                     }
                 </div>
             </div>

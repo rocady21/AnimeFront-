@@ -52,20 +52,12 @@ export const useFriendSlice = () => {
     }
 
     const AcceptFriendRequest = async ({ id_me, id_friend }) => {
-        console.log("llego:D")
         try {
             if (!id_me || !id_friend) {
-                console.log("Error al aceptar la solicitud");
                 return;
             }
-
             const { data } = await animeApi.put("/user/aceptarAmigo", { id_me, id_friend })
-            console.log("mando la peticion:D")
-
-
             if (data.ok === true) {
-                console.log("llegox3:D")
-
                 dispach(onClearRequestFriend())
             }
         } catch (error) {
@@ -99,13 +91,11 @@ export const useFriendSlice = () => {
 
     const loadInfoUser = async ({ id_user }) => {
         try {
-            console.log("Hola :D")
             const { data } = await animeApi.post("/user/getUserById", { id_user })
 
             if (data.ok === true) {
                 dispach(onloadUserById(data.userInfo))
             } else {
-                console.log("error")
             }
         } catch (error) {
             console.log(error)
@@ -116,9 +106,7 @@ export const useFriendSlice = () => {
         try {
             const { data } = await animeApi.post("/user/getUserById", { id_user })
             if (data) {
-                console.log(data)
                 const { userInfo } = data
-                console.log(userInfo)
                 const friendRequestInfo = {
                     _id: userInfo._id,
                     photo: userInfo.photo,
@@ -133,8 +121,7 @@ export const useFriendSlice = () => {
     }
 
     const loadFriendsOffline = async ({ id_user }) => {
-        console.log("te amo mucho")
-        console.log(id_user)
+
         try {
             if (id_user) {
                 const { data } = await animeApi.post("/user/listFriends", { id_user })
@@ -171,8 +158,6 @@ export const useFriendSlice = () => {
 
     const removeFriendOnline = (userID) => {
         if (userID) {
-            console.log(userID)
-            console.log("xddxxdAA")
             dispach(onRemoveFriendOnline(userID))
         }
 

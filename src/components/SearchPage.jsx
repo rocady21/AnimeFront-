@@ -9,10 +9,6 @@ export const SearchPage = () => {
 
     const { resultsSearch, LoadAnimes } = useAnimeSlice()
     const { peoples } = useFriendSlice()
-
-
-    console.log(peoples)
-
     return (
         <div className='px-[50px]'>
             <p className='text-center my-[25px] text-white text-[20px]'>Resultado de la Busqueda de Animes:</p>

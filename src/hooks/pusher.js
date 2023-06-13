@@ -77,13 +77,13 @@ export const suscribeToStatusLike = (channelName, updateLikes) => {
 
 }
 
-export const suscribeToStatuDisLike = (channelName, updateDislikes) => {
+export const suscribeToStatuDisLike = (channelName, statusDisLikes) => {
 
   const channel = pusher.subscribe(channelName);
 
-  const data = channel.bind('addorquitDisLike', function (data) {
+  const data = channel.bind('addorquitDislike', function (data) {
     if (data) {
-      updateDislikes(data.message);
+      statusDisLikes(data.message);
     }
   });
   return data

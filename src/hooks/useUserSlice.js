@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import animeApi from "../AxiosConection/animeApi"
-import { CLearMessageError, onErrorLogin, onLoadAnimesFav, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
+import { CLearMessageError, onErrorLogin, onFriends, onLoadAnimesFav, onLoadInfoUserById, onLogin, onLogout } from "../store/Slices/userSlice/userSlice"
 
 
 
@@ -9,7 +9,7 @@ export const useUserSlice = () => {
 
     const Dispatch = useDispatch()
     const navigate = useNavigate()
-    const { state, user, messageError, resultsAnimesFav } = useSelector((state) => state.user)
+    const { state, user, messageError, resultsAnimesFav, peopleInfo, friends } = useSelector((state) => state.user)
 
 
     const startLogin = async ({ email, password }) => {
@@ -90,7 +90,6 @@ export const useUserSlice = () => {
         }
         try {
             const { data } = await animeApi.post("/user/addAnimeFav", { id_user, Data })
-            console.log(data)
 
         } catch (error) {
             console.log(error)
@@ -106,7 +105,6 @@ export const useUserSlice = () => {
             if (data) {
                 Dispatch(onLoadAnimesFav(data.AnimesFav))
             }
-
         } catch (error) {
             console.log(error)
             console.log("error al cargar los animes Favoritos")
@@ -116,18 +114,56 @@ export const useUserSlice = () => {
         Dispatch(CLearMessageError())
     }
 
+    const loadUserById = async ({ id_user }) => {
+        try {
+            const { data } = await animeApi.post("/user/loadinfoUserById", { id_user })
+            if (data.ok === true) {
+                console.log(data)
+                Dispatch(onLoadInfoUserById(data.user))
+            } else {
+                console.log("no hy user")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // funcion que se fije si dos usuarios son amigos
+
+    const Friends = ({ id_friend }) => {
+        try {
+            user.listFriends.map((friend) => {
+                console.log(friend)
+                if (friend.id_User === id_friend && friend.status === "accept") {
+                    return Dispatch(onFriends("friends"))
+                } else if (friend.id_User === id_friend && friend.status === "pending") {
+                    return Dispatch(onFriends("pending"))
+                } else {
+                    return Dispatch(onFriends("no-friends"))
+                }
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
 
 
     return {
         user,
+        resultsAnimesFav,
+        messageError,
+        peopleInfo,
+        friends,
         startLogin,
         CheckAuthToken,
         startLogout,
         RegisterUsuario,
-        messageError,
         addFavoriteAnime,
         listAnimeFavorite,
-        resultsAnimesFav,
-        LimpiarMessageError
+        LimpiarMessageError,
+        loadUserById,
+        Friends
     }
 }

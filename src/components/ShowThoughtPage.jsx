@@ -18,7 +18,7 @@ export const ShowThoughtPage = () => {
 
     return <div className="text-white w-full h-full flex flex-row justify-center">
         {
-            resultsPost && <ThoughtCardComplete postInfo={resultsPost} userInfo={user} key={resultsPost._id} />
+            resultsPost && <ThoughtCardComplete postInfo={resultsPost} key={resultsPost._id} />
         }
     </div>
 }

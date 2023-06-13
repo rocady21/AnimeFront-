@@ -20,7 +20,6 @@ export const TipoAnimeDropDown = ({ setKey }) => {
     }
     useEffect(() => {
         setKey({ key: "Tipo", value: tipoAnimeSelected })
-        console.log(tipoAnimeSelected)
     }, [tipoAnimeSelected]);
 
     return (

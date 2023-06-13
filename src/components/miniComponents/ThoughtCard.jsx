@@ -1,18 +1,23 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { AiOutlineHeart } from "react-icons/ai"
 import { FcDislike } from "react-icons/fc"
 import { IoIosShareAlt } from "react-icons/io"
 import { FaRegComment } from "react-icons/fa"
 import { GrMoreVertical } from "react-icons/gr"
 import { useNavigate } from "react-router-dom"
+import { OptionButton } from "./OptionButton"
 
 
 export const ThoughtCard = ({ postInfo, userInfo }) => {
     const navigate = useNavigate();
+    const [optionButton, setoptionButton] = useState(false)
+    const optionsThought = ["Editar", "Borrar", "Ver"]
 
     const MostrarThoght = () => {
         navigate(`/post/${postInfo._id}`)
     }
+
+
 
     const Like = () => {
 
@@ -20,6 +25,8 @@ export const ThoughtCard = ({ postInfo, userInfo }) => {
     const disLike = () => {
 
     }
+
+
 
     return (
         <div className='w-full min-h-[300px] px-[25px] flex flex-col justify-around '>
@@ -38,9 +45,12 @@ export const ThoughtCard = ({ postInfo, userInfo }) => {
                             <p className="leading-relaxed">{postInfo.Descripcion}</p>
                         </div>
                         <div className='config w-[10%] h-full flex justify-center '>
-                            <button className='text-white text-[20px] self-start '>
+                            <div className='text-white text-[20px] self-start relative cursor-pointer' onClick={() => setoptionButton(!optionButton)}>
                                 <GrMoreVertical />
-                            </button>
+                                {
+                                    optionButton === true && <OptionButton options={optionsThought} idPost={postInfo._id} />
+                                }
+                            </div>
                         </div>
 
 

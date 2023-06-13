@@ -7,7 +7,9 @@ export const postSlice = createSlice({
   initialState: {
     post: [],
     isLoading: false,
-    resultsPost: undefined
+    resultsPost: undefined,
+    resultsComentarios: undefined,
+    MesaggeStatus: ""
   },
   reducers: {
     onLoadPostsUser: (state, { payload }) => {
@@ -27,10 +29,19 @@ export const postSlice = createSlice({
     },
     onShowThought: (state, { payload }) => {
       state.resultsPost = payload
+    },
+    onLoadComntsByPost: (state, { payload }) => {
+      state.resultsComentarios = payload
+    },
+    onNoComents: (state, { payload }) => {
+      state.resultsComentarios = payload
+    },
+    onDeletePost: (state, { payload }) => {
+      state.MesaggeStatus = payload
     }
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadPostsUser, onCreateNewPost, onShowThought } = postSlice.actions
+export const { onLoadPostsUser, onNoComents, onCreateNewPost, onShowThought, onLoadComntsByPost, onDeletePost } = postSlice.actions

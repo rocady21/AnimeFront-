@@ -44,8 +44,7 @@ export const NavBar = () => {
     setFriendsOnline(userID)
   }
   const removeOnline = (userID) => {
-    console.log("Hola")
-    console.log(userID)
+
     removeFriendOnline(userID)
   }
   const Suscribe = () => {
@@ -68,12 +67,6 @@ export const NavBar = () => {
     loadFriendsOnline(user._id);
     loadFriendsOffline({ id_user: user._id })
   }, []);
-
-  useEffect(() => {
-    console.log(FriendsOnlineAndOffline)
-  }, [FriendsOnlineAndOffline]);
-
-
 
   const buscarAnime = (e) => {
     e.preventDefault()

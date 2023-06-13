@@ -11,17 +11,17 @@ import SendIcon from '@mui/icons-material/Send';
 export const VerCapAnime = ({ numeroCap, anime }) => {
 
   const { getCapituloById, infoCapPage, results } = useAnimeSlice();
-    const { user} = useUserSlice()
+  const { user } = useUserSlice()
   const [stateLike, setstateLike] = useState(0);
   const [Comentario, setComentario] = useState("");
   const [stateDisLike, setstateDisLike] = useState(0);
-  const {resultsComentarios,AgregarComentario,CargarComentarios} = useAnimeSlice()
+  const { resultsComentarios, AgregarComentario, CargarComentarios } = useAnimeSlice()
 
   const covertIntNumCap = parseInt(numeroCap);
 
   useEffect(() => {
     getCapituloById(anime, covertIntNumCap);
-    CargarComentarios({idAnime:anime._id,NumeroCap:covertIntNumCap})
+    CargarComentarios({ idAnime: anime._id, NumeroCap: covertIntNumCap })
   }, []);
 
 
@@ -36,20 +36,19 @@ export const VerCapAnime = ({ numeroCap, anime }) => {
 
 
 
-  const addComentario = (e)=> {
+  const addComentario = (e) => {
     e.preventDefault()
-    if(Comentario.length>=5) {
-      AgregarComentario({idAnime:anime._id,id_User:user._id,NumeroCap:covertIntNumCap,Comentario:Comentario,photo:user.photo})
+    if (Comentario.length >= 5) {
+      AgregarComentario({ idAnime: anime._id, id_User: user._id, NumeroCap: covertIntNumCap, Comentario: Comentario, photo: user.photo })
       setComentario("")
     } else {
-      console.log("el comentario es muy corto")
     }
   }
 
-  useEffect(()=> {
-        CargarComentarios({idAnime:anime._id,NumeroCap:covertIntNumCap})
-  },[])
-  
+  useEffect(() => {
+    CargarComentarios({ idAnime: anime._id, NumeroCap: covertIntNumCap })
+  }, [])
+
   return (
     <div className=" w-full h-full">
       <div className="h-[700px]  bg-black m-auto relative ">
@@ -118,25 +117,25 @@ export const VerCapAnime = ({ numeroCap, anime }) => {
               <h1 className="text-white text-[30px] mb-[50px]">Agregar Comentario</h1>
               <form onSubmit={addComentario} className="flex flex-row items-center justify-between">
                 <div className="w-[10%] flex items-start">
-                    <img className="w-[50px] h-[50px] rounded-full object-cover items-cover" src={user.photo} alt="" />
+                  <img className="w-[50px] h-[50px] rounded-full object-cover items-cover" src={user.photo} alt="" />
                 </div>
-              <textarea className="bg-slate-600 w-full text-white px-[20px] pt-[10px] rounded-[5px] min-h-[50px] max-h-[100px]" value={Comentario} onChange={(e)=> setComentario(e.target.value)} rows="3" cols="" placeholder="Escriba Su comentario" ></textarea>
-              <button className="w-[50px] p-[10px] m-4 h-[50px] bg-amber-600 rounded-full flex flex-row items-center justify-center" ><SendIcon sx={{color:"white", fontSize:25}}/></button>
+                <textarea className="bg-slate-600 w-full text-white px-[20px] pt-[10px] rounded-[5px] min-h-[50px] max-h-[100px]" value={Comentario} onChange={(e) => setComentario(e.target.value)} rows="3" cols="" placeholder="Escriba Su comentario" ></textarea>
+                <button className="w-[50px] p-[10px] m-4 h-[50px] bg-amber-600 rounded-full flex flex-row items-center justify-center" ><SendIcon sx={{ color: "white", fontSize: 25 }} /></button>
               </form>
             </div>
             <div className="comentarios w-full px-[40px] mt-[50px]  py-[50px] bg-black/20 rounded-[20px]">
               {
-                (resultsComentarios[0])? (
-                  
-                  resultsComentarios.map((comentario)=> {
+                (resultsComentarios[0]) ? (
+
+                  resultsComentarios.map((comentario) => {
                     return <ComentarioItem comentario={comentario} />
                   })
-                ):
-                (
-                  <div className="text-center p-[50px] bg-black/30 rounded-[25px]">
-                    <p className="text-[30px] text-white">No hay Comentarios...</p>
-                  </div>
-                )
+                ) :
+                  (
+                    <div className="text-center p-[50px] bg-black/30 rounded-[25px]">
+                      <p className="text-[30px] text-white">No hay Comentarios...</p>
+                    </div>
+                  )
 
               }
             </div>
