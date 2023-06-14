@@ -11,8 +11,7 @@ import { SearchPage } from '../components/SearchPage'
 import { PostPageNav } from '../components/PostPageNav'
 import { ProfilePeople } from '../components/ProfilePeople'
 import { ShowThoughtPage } from '../components/ShowThoughtPage'
-import { ChatPage } from '../components/ChatPage'
-
+import { ChatPage } from '../components/ChatPage/ChatPage'
 
 
 export const AppRouter = () => {

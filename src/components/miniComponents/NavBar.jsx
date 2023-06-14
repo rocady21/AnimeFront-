@@ -10,6 +10,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCaretUp } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { FriendStatus } from './friendStatus'
+import {BsChatRightText} from "react-icons/bs"
 import 'animate.css'
 
 
@@ -27,7 +28,6 @@ export const NavBar = () => {
   }
   const { user } = useUserSlice();
   const { photo } = user
-  const [notification, setnotification] = useState(true);
   const [stateModal, setstateModal] = useState(false)
   const { LoadFriendsRequest, friendRequest, SearchPeople, LoadFriendRequestRealTime, loadFriendsOnline, loadFriendsOffline, friends, FriendsOnlineAndOffline, setFriendsOnline, removeFriendOnline } = useFriendSlice()
 
@@ -66,6 +66,7 @@ export const NavBar = () => {
   useEffect(() => {
     loadFriendsOnline(user._id);
     loadFriendsOffline({ id_user: user._id })
+    LoadFriendsRequest({id_user:user._id})
   }, []);
 
   const buscarAnime = (e) => {
@@ -84,6 +85,9 @@ export const NavBar = () => {
 
   const openCloseFriensOnline = () => {
     setfriendsOnlineList(!friendsOnlineList)
+  } 
+  const navigateChatPage = () => {
+    navigate("/chat")
   }
 
 
@@ -111,8 +115,9 @@ export const NavBar = () => {
           </form>
         </div>
 
-        <div className="flex flex-row items-center px-[50px] ">
-          <button className='w-[50px] h-[50px] relative ' onClick={OpenModal}>
+        <div className="flex flex-row items-center   w-[20%] flex flex-row justify-around ">
+          <a className='' onClick={navigateChatPage}><BsChatRightText className='text-[20px] text-amber-500'/></a>
+          <button className=' relative ' onClick={OpenModal}>
             <img className='object-cover object-center' src="../icons/friendRequest.png" alt="" />
             {
               friendRequest[0] && <div className='w-[10px] h-[10px] bg-red-700	bottom-0 translate-x-[-10px] translate-y-[-10px] right-0 rounded-full absolute'></div>
