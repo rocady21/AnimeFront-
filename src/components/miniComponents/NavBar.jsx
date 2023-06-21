@@ -116,7 +116,7 @@ export const NavBar = () => {
         </div>
 
         <div className="flex flex-row items-center   w-[20%] flex flex-row justify-around ">
-          <a className='' onClick={navigateChatPage}><BsChatRightText className='text-[20px] text-amber-500'/></a>
+          <a className='' onClick={navigateChatPage}><BsChatRightText className='text-[20px] text-amber-500 cursor-pointer'/></a>
           <button className=' relative ' onClick={OpenModal}>
             <img className='object-cover object-center' src="../icons/friendRequest.png" alt="" />
             {
