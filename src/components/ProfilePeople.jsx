@@ -7,15 +7,20 @@ import { Publicaciones } from './PerfilComponents/Publicaciones'
 import { AnimesFavoritos } from './PerfilComponents/AnimesFav'
 import { PostPagePerfil } from './PerfilComponents/PostPagePerfil'
 import { FiMoreHorizontal } from "react-icons/fi"
+import { useFriendSlice } from '../hooks/useFriendSlice'
+import { OptionButton } from './miniComponents/OptionButton'
 
 export const ProfilePeople = () => {
 
     const { id_people } = useParams()
-    const { resultsAnimesFav, listAnimeFavorite, loadUserById, peopleInfo, Friends, friends } = useUserSlice()
+    const { user,resultsAnimesFav, listAnimeFavorite, loadUserById, peopleInfo, Friends, friends } = useUserSlice()
+    const {AddFriend} = useFriendSlice()
     const [stateInfo, setstateInfo] = useState("Publicaciones")
     const { LoadPostersUser, post } = usePosterSlice()
 
-
+    const [stateOptionsFriends, setstateOptionsFriends] = useState(false);
+    const options = ["Enviar Mensaje","Borrar Amigo","Ver Amigos"]
+    
     useEffect(() => {
         LoadPostersUser(id_people)
         listAnimeFavorite({ id_User: id_people })
@@ -23,8 +28,13 @@ export const ProfilePeople = () => {
         Friends({ id_friend: id_people })
     }, [])
 
-    const AñadirAmigo = () => {
 
+    const enviarMensaje = ()=> {
+
+    }
+    
+    const AñadirAmigo = () => {
+        AddFriend({id_me:user._id,id_friend:id_people})
     }
 
     return (
@@ -36,8 +46,11 @@ export const ProfilePeople = () => {
                 <div className="portada w-full h-[300px] relative">
                     <img src={peopleInfo.portada} className='object-center w-full h-full' alt="" />
                     {
-                        friends === "no-friends" ? <button className='rounded-[20px] text-white px-[25px] py-[10px] bg-amber-600 absolute top-[225px] left-[775px]'>Seguir</button> : friends === "pending" ?
-                            <p className='rounded-[20px] text-white px-[25px] py-[10px] bg-amber-600 absolute top-[225px] left-[775px]'>Pendiente</p> : <div className='rounded-[5px] text-white px-[10px] py-[5px] bg-amber-600 absolute top-[225px] left-[775px] flex flex-row'><p className='px-[5px]'>Amigos</p><button className='px-[5px]'> <FiMoreHorizontal /> </button></div>
+                        friends === "no-friends" ? <button onClick={AñadirAmigo} className='rounded-[20px] text-white px-[25px] py-[10px] bg-amber-600 absolute top-[75%] left-[85%]'>Seguir</button> : friends === "pending" ?
+                        <p className='rounded-[20px] text-white px-[25px] py-[10px] bg-amber-600 absolute top-[75%] left-[85%]'>Pendiente</p> : <div className='rounded-[5px] text-white px-[10px] py-[5px] bg-amber-600 absolute top-[75%] left-[85%] flex flex-row'><p className='px-[5px]'>Amigos</p><button className='px-[5px]' onClick={()=> setstateOptionsFriends(!stateOptionsFriends) }> <FiMoreHorizontal />
+                            {
+                                stateOptionsFriends === true && <OptionButton options={options} id_User={id_people}/>
+                            } </button></div>
 
                     }
                 </div>
@@ -45,7 +58,7 @@ export const ProfilePeople = () => {
                     <img src={peopleInfo.photo} className='object-cover object-center h-full rounded-full ' alt="" />
                 </div>
                 <div className="info border-x-[1px] border-white/20  ">
-                    <h1 className='text-white font-bold text-[30px] ml-[300px] mt-[10px]'>{peopleInfo.name}</h1>
+                    <h1 className='text-white font-bold text-[30px] ml-[25%] mt-[10px]'>{peopleInfo.name}</h1>
                     <div className="info w-full h-[200px] mt-[70px]">
                         <div className="resumen">
                             <p className='text-white px-[100px] py-[20px]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, modi quaerat unde quas iure aliquam, eligendi corrupti voluptatum aliquid ullam temporibus! Nam saepe itaque doloremque. Molestias est aspernatur ipsam pariatur.</p>
@@ -78,7 +91,7 @@ export const ProfilePeople = () => {
                     </div>
 
                     {
-                        stateInfo === "Publicaciones" ? <Publicaciones post={post} isMe={false} /> : stateInfo === "AnimesFav" ? <AnimesFavoritos FavsAnime={resultsAnimesFav} id_people={id_people} /> : <PostPagePerfil />
+                        stateInfo === "Publicaciones" ? <Publicaciones post={post} isMe={false} userInfo = {peopleInfo} /> : stateInfo === "AnimesFav" ? <AnimesFavoritos FavsAnime={resultsAnimesFav} id_people={id_people} /> : <PostPagePerfil />
                     }
                 </div>
 

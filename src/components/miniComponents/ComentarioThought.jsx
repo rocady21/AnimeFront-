@@ -4,21 +4,22 @@ import { GrMoreVertical } from "react-icons/gr"
 import { AiFillLike } from "react-icons/ai"
 import { AiFillDislike } from "react-icons/ai"
 import { FaRegComment } from "react-icons/fa"
+import { MomentFromNow } from "../../helpers/getMomentFromNow"
 
 export const ComentarioThought = ({ infoComentario }) => {
-    console.log(infoComentario)
-    console.log("infoComentario")
+
+    const time = MomentFromNow(infoComentario.Fecha)
     return (
         <div className="w-full flex flex-col text-white mb-[30px]">
             <div className="comentario flex flex-row">
-                <div className="img w-[10%]">
+                <div className="img w-[10%] self-center">
                     <img className="h-[50px] w-[50px] object-cover object-center rounded-full" src={infoComentario.photo} alt="" />
                 </div>
-                <div className="texto w-[80%] flex flex-col" >
-                    <div className="w-[35%] flex flex-row justify-between">
+                <div className="texto w-[90%] flex flex-col" >
+                    <div className=" flex flex-row">
                         <p className="mb-[10px] font-bold">{infoComentario.name}</p>
-                        <p className="font-bold">-</p>
-                        <p className="text-gray-400">Hace 15 mn</p>
+                        <p className="font-bold px-[5px]">-</p>
+                        <p className="text-gray-400">{time}</p>
                     </div>
                     <p className="">{infoComentario.comentario}</p>
                 </div>

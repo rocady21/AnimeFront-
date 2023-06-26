@@ -15,10 +15,6 @@ export const PerfilPage = () => {
   const [stateInfo, setstateInfo] = useState("Publicaciones")
   const { LoadPostersUser, post } = usePosterSlice()
 
-
-
-  console.log(user)
-
   useEffect(() => {
     LoadPostersUser(user._id)
     listAnimeFavorite({ id_User: user._id })
@@ -71,7 +67,7 @@ export const PerfilPage = () => {
           </div>
 
           {
-            stateInfo === "Publicaciones" ? <Publicaciones post={post} isMe={true} peopleid={id_people} /> : stateInfo === "AnimesFav" ? <AnimesFavoritos FavsAnime={resultsAnimesFav} id_people={id_people} /> : <PostPagePerfil />
+            stateInfo === "Publicaciones" ? <Publicaciones post={post} isMe={true} userInfo={user}  /> : stateInfo === "AnimesFav" ? <AnimesFavoritos FavsAnime={resultsAnimesFav} id_people={id_people} /> : <PostPagePerfil />
           }
         </div>
 

@@ -10,7 +10,7 @@ import { ThoughtCardComplete } from "./miniComponents/ThoughtCardComplete"
 export const ShowThoughtPage = () => {
     const { user } = useUserSlice()
     const { idPost } = useParams()
-    const { resultsPost, filterPostById } = usePosterSlice()
+    const { resultsPost, filterPostById,statusResultsPost } = usePosterSlice()
 
     useEffect(() => {
         filterPostById({ id_post: idPost })
@@ -18,7 +18,7 @@ export const ShowThoughtPage = () => {
 
     return <div className="text-white w-full h-full flex flex-row justify-center">
         {
-            resultsPost && <ThoughtCardComplete postInfo={resultsPost} key={resultsPost._id} />
+            statusResultsPost === "post" ? <ThoughtCardComplete postInfo={resultsPost} key={resultsPost._id} /> : <p className="text-white text-center">No existe este post</p>
         }
     </div>
 }

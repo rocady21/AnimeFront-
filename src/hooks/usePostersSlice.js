@@ -7,7 +7,7 @@ import { onCreateNewPost, onDeletePost, onLoadComntsByPost, onLoadPostsUser, onN
 
 export const usePosterSlice = () => {
 
-    const { post, isLoading, resultsPost, resultsComentarios, MesaggeStatus } = useSelector((state) => state.post)
+    const { post, isLoading, resultsPost, resultsComentarios, MesaggeStatus,statusResultsPost } = useSelector((state) => state.post)
     const dispach = useDispatch()
 
     const LoadPostersUser = async (id_user) => {
@@ -17,7 +17,6 @@ export const usePosterSlice = () => {
                 dispach(onLoadPostsUser(data.userPost))
                 console.log(data)
             }
-            console.log("no hay data")
 
         } catch (error) {
             console.log("error al cargar el/los posts de este usuario")
@@ -27,7 +26,6 @@ export const usePosterSlice = () => {
 
     const CreateNewPoster = async ({ descripcion, id_user, Tipo }) => {
 
-        console.log(descripcion)
         const initialPost = {
             Descripcion: descripcion,
             Foto: "",
@@ -154,7 +152,6 @@ export const usePosterSlice = () => {
     const handleDeletePost = async ({ id_post }) => {
         console.log(id_post)
         console.log("deletePost")
-        const hola = "Hola"
         try {
             const { data } = await animeApi.delete("/posts/BorrarPost", { id_post })
             if (data.ok === true) {
@@ -175,6 +172,7 @@ export const usePosterSlice = () => {
         resultsPost,
         resultsComentarios,
         MesaggeStatus,
+        statusResultsPost,
         LoadPostersUser,
         CreateNewPoster,
         filterPostById,

@@ -11,7 +11,7 @@ export const ChatPage = () => {
                 <ChatsContacts/>
             </div>
             <div className="chat w-2/3">
-                <Chat/>
+                <Chat suscribeStatus ={true}/>
             </div>
         </div>
     )

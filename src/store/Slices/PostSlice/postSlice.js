@@ -9,7 +9,8 @@ export const postSlice = createSlice({
     isLoading: false,
     resultsPost: undefined,
     resultsComentarios: undefined,
-    MesaggeStatus: ""
+    MesaggeStatus: "",
+    statusResultsPost: "no-post"
   },
   reducers: {
     onLoadPostsUser: (state, { payload }) => {
@@ -29,6 +30,7 @@ export const postSlice = createSlice({
     },
     onShowThought: (state, { payload }) => {
       state.resultsPost = payload
+      state.statusResultsPost = "post"
     },
     onLoadComntsByPost: (state, { payload }) => {
       state.resultsComentarios = payload

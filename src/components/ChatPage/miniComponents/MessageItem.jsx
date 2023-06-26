@@ -1,31 +1,31 @@
 import React from 'react'
 
-export const MessageItem = ({infoMessage,isMe}) => {
+export const MessageItem = ({infoMessage,isMe,contactSelected,user}) => {
   return (
-    <div>
+    <div className='w-full flex flex-col'>
         {
-            isMe === true ? <div className=' max-w-[30%] h-[100px] flex flex-row justify-end '>
-            <div className="foto w-[55px] h-[55px] self-center  mr-[15px] ">
-                <img className='w-full h-full rounded-full object-cover object-center' src="../../../icons/Kokushibo_anime.webp" alt="" />
-            </div>
-            <div className="texto w-[120px]  self-center pl-[15px] py-[5px] rounded-[50px] bg-amber-600 flex flex-row">
-                <div className='w-[50%] self-center'>
-                    <p className='text-[16px]'>{infoMessage.message}</p>
+            isMe === true ? <div className=' max-w-[50%] h-[75px] flex flex-row self-end   '>
+            <div className="texto self-center pr-[15px] py-[5px] rounded-[50px] bg-amber-600 flex flex-row justify-between px-[15px]">
+                <div className=" hora w-[70px] self-end ">
+                    <p className='text-[10px] w-full'>17:06 am</p>
                 </div>
-                <div className="w-[50%] hora self-end">
-                    <p className='text-[12px]'>17:06 am</p>
+                <div className='self-center w-full '>
+                    <p className='w-full h-full text-end text-[14px]'>{infoMessage.message}</p>
                 </div>
             </div>
-        </div> : <div className=' max-w-[30%] h-[100px] flex flex-row '>
+            <div className="foto w-[55px] h-[55px] self-center  ml-[15px] ">
+                <img className='w-full h-full rounded-full object-cover object-center' src={user?.photo} alt="" />
+            </div>
+        </div> : <div className=' max-w-[50%] h-[75px] flex flex-row  '>
         <div className="foto w-[55px] h-[55px] self-center  mr-[15px] ">
-            <img className='w-full h-full rounded-full object-cover object-center' src="../../../icons/Kokushibo_anime.webp" alt="" />
+            <img className='w-full h-full rounded-full object-cover object-center' src={contactSelected?.photo} alt="" />
         </div>
-        <div className="texto w-[120px]  self-center pl-[15px] py-[5px] rounded-[50px] bg-amber-600 flex flex-row">
-            <div className='w-[50%] self-center'>
-                <p className='text-[16px]'>{infoMessage.message}</p>
+        <div className="texto self-center pl-[15px] py-[5px] rounded-[50px] bg-amber-600 flex flex-row justify-between px-[15px]">
+            <div className='w-full self-center'>
+                <p className='text-[14px] text-start'>{infoMessage.message}</p>
             </div>
-            <div className="w-[50%] hora self-end">
-                <p className='text-[12px]'>17:06 am</p>
+            <div className="hora self-end w-[70px]">
+                <p className='text-[10px] w-full '>17:06 am</p>
             </div>
         </div>
     </div>

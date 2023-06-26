@@ -13,15 +13,17 @@ import { AiFillLike } from "react-icons/ai"
 import { AiFillDislike } from "react-icons/ai"
 import { FaRegComment } from "react-icons/fa"
 import SendIcon from '@mui/icons-material/Send';
+import { MomentFromNow } from "../../helpers/getMomentFromNow"
 
 export const ThoughtCardComplete = ({ postInfo }) => {
     const { Comentarios } = postInfo
-    const { handleInteractions, handleAddComentarios, checkStatusLikeAndDislike, handleLoadComentsByPost, resultsComentarios, } = usePosterSlice()
+    const { handleInteractions, handleAddComentarios, checkStatusLikeAndDislike, handleLoadComentsByPost, resultsComentarios,statusResultsPost } = usePosterSlice()
     const { user, peopleInfo: userInfo, loadUserById } = useUserSlice()
     const [stateAddComentario, setstateAddComentario] = useState(false)
     // likes y dislikes 
-    const [MeGusta, setMeGusta] = useState(postInfo.MeGusta.length)
-    const [NoMeGusta, setNoMeGusta] = useState(postInfo.NoMeGusta.length)
+    const [MeGusta, setMeGusta] = useState(postInfo?.MeGusta?.length)
+    const [NoMeGusta, setNoMeGusta] = useState(postInfo?.NoMeGusta?.length)
+    const time = MomentFromNow(postInfo.FechaPublicacion)
     // form para agregar Comentario
     const { inputValue, comentario: ComentarioInput, setKey, onResetForm } = useForm({
         id_User: user._id,
@@ -64,7 +66,6 @@ export const ThoughtCardComplete = ({ postInfo }) => {
     const AddAndQuitlike = () => {
         const data = { id_post: postInfo._id, id_user: user._id }
         const statusLike = localStorage.getItem("statusLike")
-        console.log(statusLike)
         if (statusLike === "NoLiked") {
             const key = "addLike"
             handleInteractions(data, key)
@@ -106,18 +107,21 @@ export const ThoughtCardComplete = ({ postInfo }) => {
 
 
     return (
-        <div className='w-[60%] px-[25px] flex flex-col justify-around mt-[50px]'>
-            <div className='Publicacion w-full h-[200px] bg-black/30 rounded-t-lg flex flex-row hover:bg-black/50'>
+        <>
+         {
+            postInfo ? <div className='w-[60%] px-[25px] flex flex-col justify-around mt-[50px]'>
+ 
+            <div className='Publicacion w-full h-[200px] bg-black/30 rounded-t-lg flex flex-row '>
                 <div className="photo w-[10%] h-full  flex justify-center " >
                     <img src={userInfo.photo} className='rounded-full h-[50px] w-[50px] mt-[20%] object-cover object-center' alt="" />
                 </div>
                 <div className="info w-[90%] h-full flex flex-col py-[10px] justify-around">
                     <div className="inofPublicacion w-full h-[60%] flex flex-row">
                         <div className=' w-[90%] h-full text-white flex flex-col'>
-                            <div className="name flex flex-row w-[30%] justify-around p2|b-[10px] ">
+                            <div className="name flex flex-row p2|b-[10px] ">
                                 <p className="name font-bold ">{userInfo.name} </p>
-                                <p className='font-bold'> · </p>
-                                <p className='time text-gray-400'>Hace 8h</p>
+                                <p className='font-bold px-[5px]'> · </p>
+                                <p className='time text-gray-400'>{time}</p>
                             </div>
                             <p className="leading-relaxed">{postInfo.Descripcion}</p>
                         </div>
@@ -133,7 +137,7 @@ export const ThoughtCardComplete = ({ postInfo }) => {
 
                         <button className="buttonInteracciones" onClick={AddAndQuitlike}><AiFillLike /> <p>{MeGusta}</p></button>
                         <button className='buttonInteracciones' onClick={AddAndQuitDislike}><AiFillDislike /> <p>{NoMeGusta}</p></button>
-                        <button className='buttonInteracciones'><FaRegComment onClick={() => setstateAddComentario(!stateAddComentario)} /> <p>{Comentarios.length}</p></button>
+                        <button className='buttonInteracciones'><FaRegComment onClick={() => setstateAddComentario(!stateAddComentario)} /> <p>{Comentarios?.length}</p></button>
                         <button className='buttonInteracciones'><IoIosShareAlt /></button>
 
                     </div>
@@ -160,6 +164,8 @@ export const ThoughtCardComplete = ({ postInfo }) => {
                     }
                 </div>
             </div>
-        </div>
-    )
+        </div> : <p className="text-white text-center">Cargando...{console.log("no existe")}</p>
+         }   
+        </>
+        )
 }

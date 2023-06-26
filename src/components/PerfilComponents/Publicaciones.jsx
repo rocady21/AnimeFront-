@@ -7,19 +7,11 @@ import { BorrarPostNotification } from '../miniComponents/ComponentsToastify/Bor
 
 
 
-export const Publicaciones = ({ post, isMe, peopleid }) => {
-    const { user: userMe, loadUserById, peopleInfo } = useUserSlice()
+export const Publicaciones = ({ post, isMe,userInfo }) => {
+    const { user, loadUserById, peopleInfo } = useUserSlice()
     const [thought, setthought] = useState("")
     const { CreateNewPoster, MesaggeStatus } = usePosterSlice()
     const [statusToastify, setstatusToastify] = useState(false)
-    let user = userMe
-    useEffect(() => {
-        if (peopleid) {
-            loadUserById({ id_user: peopleid })
-            user = peopleInfo
-        }
-    }, [])
-
 
     useEffect(() => {
         setstatusToastify(true)
@@ -49,7 +41,7 @@ export const Publicaciones = ({ post, isMe, peopleid }) => {
             {
                 post ?
                     post.map((post) => {
-                        return <ThoughtCard postInfo={post} userInfo={user} key={post._id} />
+                        return <ThoughtCard postInfo={post} userInfo={userInfo} key={post._id} isMe = {isMe} />
                     }) :
                     <p className='text-white text-center py-[50px]'>No hay Thought...</p>
             }

@@ -89,7 +89,6 @@ export const useAnimeSlice = () => {
             const { data } = await animeApi.put("/anime/updateComentario", { camposaActualizar, idAnime, NumeroCap })
             dispach(onAddNewComent(camposaActualizar))
         } catch (error) {
-            console.log("no se pudo agregar el comentario")
 
         }
 

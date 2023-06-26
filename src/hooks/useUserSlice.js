@@ -56,6 +56,7 @@ export const useUserSlice = () => {
             Dispatch(onLogout());
         }
         try {
+            console.log(token)
             const { data } = await animeApi.get("auth/validarUserInfoByToken");
             if (data.ok) {
                 Dispatch(onLogin(data?.userInfo))
@@ -117,11 +118,9 @@ export const useUserSlice = () => {
     const loadUserById = async ({ id_user }) => {
         try {
             const { data } = await animeApi.post("/user/loadinfoUserById", { id_user })
-            if (data.ok === true) {
-                console.log(data)
+            if (data.ok == true) {
                 Dispatch(onLoadInfoUserById(data.user))
             } else {
-                console.log("no hy user")
             }
         } catch (error) {
             console.log(error)
@@ -130,17 +129,26 @@ export const useUserSlice = () => {
     // funcion que se fije si dos usuarios son amigos
 
     const Friends = ({ id_friend }) => {
+        console.log("funcion que verifica si son amigos o no")
         try {
-            user.listFriends.map((friend) => {
-                console.log(friend)
-                if (friend.id_User === id_friend && friend.status === "accept") {
-                    return Dispatch(onFriends("friends"))
-                } else if (friend.id_User === id_friend && friend.status === "pending") {
-                    return Dispatch(onFriends("pending"))
-                } else {
-                    return Dispatch(onFriends("no-friends"))
-                }
-            })
+            console.log(user.listFriends[0])
+            if(!user.listFriends[0]) {
+                console.log("no-friends")
+                return Dispatch(onFriends("friends"))
+            } else {
+                user.listFriends.map((friend) => {
+                    if (friend.id_User === id_friend && friend.status === "accept") {
+                        console.log("friends")
+                        return Dispatch(onFriends("friends"))
+                    } else if (friend.id_User === id_friend && friend.status === "pending") {
+                        console.log("pending")
+                        return Dispatch(onFriends("pending"))
+                    } else {
+                        console.log("no friends")
+                        return Dispatch(onFriends("no-friends"))
+                    }
+                })
+            }
 
         } catch (error) {
             console.log(error)

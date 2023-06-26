@@ -90,5 +90,29 @@ export const suscribeToStatuDisLike = (channelName, statusDisLikes) => {
 
 }
 
+export const suscribeToMessagesChat = (channelName, updateChat) => {
+  const channel = pusher.subscribe(channelName);
+
+  const data = channel.bind('sendMessage', function (data) {
+    if (data) {
+      updateChat(data.message);
+    }
+  });
+  return data
+
+}
+
+export const suscribeToisWriting = (channelName) => {
+  const channel = pusher.subscribe(channelName,updateStatusWriting);
+
+  const data = channel.bind('sendMessage', function (data) {
+    if (data) {
+      updateChat(data.message);
+    }
+  });
+  return data
+
+}
+
 
 //bind the event of the presence channel to get the data attched //with it 

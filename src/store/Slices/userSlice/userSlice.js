@@ -42,7 +42,6 @@ export const userSlice = createSlice({
       state.peopleInfo = payload
     },
     onFriends: (state, { payload }) => {
-      console.log("aqui llegmaos al slice")
       state.friends = payload
     }
   },
